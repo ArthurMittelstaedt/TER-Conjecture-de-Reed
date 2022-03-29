@@ -9,4 +9,5 @@
         "linkedlist.h": "c",
         "vertexlist.h": "c"
     },
+    "C_Cpp.errorSquiggles": "Disabled",
 }

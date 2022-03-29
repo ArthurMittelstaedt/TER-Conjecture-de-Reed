@@ -4,4 +4,9 @@
         100,
         130
     ],
+    "files.associations": {
+        "*.lua.txt": "lua",
+        "linkedlist.h": "c",
+        "vertexlist.h": "c"
+    },
 }

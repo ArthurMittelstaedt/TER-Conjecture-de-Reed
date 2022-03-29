@@ -3,7 +3,7 @@
 #include "../h/LinkedList.h"
 
 // Adds a vertex at the head of the list
-void addLL(void* c, void* e)
+void addLL(Collection* c, void* e)
 {
     struct LinkedList* l = (struct LinkedList*)c;
     struct Node* oldHead = l->head;
@@ -19,7 +19,7 @@ void addLL(void* c, void* e)
 
 // Returns the first node of the list wich containts v
 // returns NULL if v is absent.
-static struct Node* findVertex(struct LinkedList* c, void* e) {
+static struct Node* findE(struct LinkedList* c, void* e) {
     struct LinkedList* l = c;
     Node* n = l->head;
     while (n != NULL && n->e != e) {
@@ -31,9 +31,9 @@ static struct Node* findVertex(struct LinkedList* c, void* e) {
 // Removes a vertex v if it's present by searching for its node then 
 // deconnecting it.
 // No effect if v is absent. 
-void removeLL(void* c, void* e) {
+void removeLL(Collection* c, void* e) {
     struct LinkedList* l = (struct LinkedList*)c;
-    Node* n = findVertex(l, e);
+    Node* n = findE(l, e);
     if (n != NULL) {
         if (n->prev != NULL) {
             n->prev->next = n->next;
@@ -48,7 +48,7 @@ void removeLL(void* c, void* e) {
     }
 };
 
-void printLL(void* c) {
+void printLL(Collection* c) {
     struct LinkedList* l = (struct LinkedList*)c;
     printf("[");
     struct Node* n = l->head;
@@ -66,13 +66,13 @@ void printLL(void* c) {
 
 #define TRUE 1
 #define FALSE 0
-int containsLL(void* c, void* e) {
+int containsLL(Collection* c, void* e) {
     struct LinkedList* l = (LinkedList*)c;
-    Node* n = findVertex(l, e);
+    Node* n = findE(l, e);
     return (n == NULL) ? FALSE : TRUE;
 }
 
-void* constructorLL() {
+Collection* constructorLL() {
     LinkedList* l = (LinkedList*)malloc(sizeof(struct LinkedList));
     l->Collection = CollectionForLinkedList;
     l->head = NULL;
@@ -80,7 +80,7 @@ void* constructorLL() {
     return  (void*)l;
 }
 
-void destroyLL(void* c) {
+void destroyLL(Collection* c) {
     LinkedList* l = (LinkedList*)c;
     struct Node* n = l->head;
     struct Node* prev = n;
@@ -92,7 +92,7 @@ void destroyLL(void* c) {
     free(l);
 }
 
-void* findLL(void* c, void* e, comparator comp) {
+void* findLL(Collection* c, void* e, comparator comp) {
     struct LinkedList* l = (struct LinkedList*)c;
     Node* n = l->head;
     while (n != NULL && !comp(n->e, e)) {
@@ -101,7 +101,7 @@ void* findLL(void* c, void* e, comparator comp) {
     return (n == NULL) ? NULL : n->e;
 }
 
-extern void printpLL(void* c, printor p) {
+extern void printpLL(Collection* c, printor p) {
     struct LinkedList* l = (struct LinkedList*)c;
     printf("[");
     struct Node* n = l->head;
@@ -118,18 +118,18 @@ extern void printpLL(void* c, printor p) {
     printf("]\n");
 };
 
-extern void* startLL(void* c) {
+extern void* startLL(Collection* c) {
     LinkedList* l = (LinkedList*)c;
     l->curr = l->head;
     return l->curr->e;
 }
 
-extern void* nextLL(void* c) {
+extern void* nextLL(Collection* c) {
     LinkedList* l = (LinkedList*)c;
     l->curr = l->curr->next;
     return l->curr->e;
 }
-extern int endLL(void* c) {
+extern int endLL(Collection* c) {
     LinkedList* l = (LinkedList*)c;
     return l->curr->next == NULL;
 }

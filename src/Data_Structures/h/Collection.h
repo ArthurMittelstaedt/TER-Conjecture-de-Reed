@@ -6,18 +6,18 @@ typedef void (*printor)(void*);
 
 typedef struct Collection
 {
-    void (*add)(void*, void*);
-    void (*remove)(void*, void*);
-    void (*print)(void*);
-    int (*contains)(void*, void*);
-    void* (*constructor)(void);
-    void (*destroy)(void*);
-    void (*printp)(void*, printor);
-    void* (*find)(void*, void*, comparator);
+    void (*add)(struct Collection*, void*);
+    void (*remove)(struct Collection*, void*);
+    void (*print)(struct Collection*);
+    int (*contains)(struct Collection*, void*);
+    struct Collection* (*constructor)(void);
+    void (*destroy)(struct Collection*);
+    void (*printp)(struct Collection*, printor);
+    void* (*find)(struct Collection*, void*, comparator);
     //iterator
-    void* (*start)(void*);
-    void* (*next)(void*);
-    int (*end)(void*);
+    void* (*start)(struct Collection*);
+    void* (*next)(struct Collection*);
+    int (*end)(struct Collection*);
 } Collection;
 
 #endif

@@ -19,19 +19,5 @@ void testAsVertexSet() {
 
 int main(void) {
     testAsVertexSet();
-    int vTab[] = { 1, 2, 3, 4, 5 };
-    struct LinkedList* l = constructorLL();
-    for (int i = 0; i < 5; i++) {
-        addLL(l, (void*)vTab[i]);
-    }
-    printLL(l);
-    removeLL(l, (void*)5);
-    printLL(l);
-    removeLL(l, (void*)3);
-    printLL(l);
-    removeLL(l, (void*)1);
-    printLL(l);
-    printf("contien 2 : %d\n", containsLL(l, (void*)2));
-    printf("contien 10 : %d\n", containsLL(l, (void*)10));
-    destroyLL(l);
+    return 0;
 }

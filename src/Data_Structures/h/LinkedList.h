@@ -9,17 +9,17 @@ typedef struct Node
     struct Node* prev;
 } Node;
 
-extern void addLL(void* c, void* e);
-extern void removeLL(void* c, void* e);
-extern void printLL(void* c);
-extern int containsLL(void* c, void* e);
-extern void* constructorLL();
-extern void destroyLL(void* c);
-extern void* findLL(void* c, void*, comparator);
-extern void printpLL(void* c, printor);
-extern void* startLL(void* c);
-extern void* nextLL(void* c);
-extern int endLL(void* c);
+extern void addLL(Collection* c, void* e);
+extern void removeLL(Collection* c, void* e);
+extern void printLL(Collection* c);
+extern int containsLL(Collection* this, void* e);
+extern Collection* constructorLL();
+extern void destroyLL(Collection* c);
+extern void* findLL(Collection* c, void*, comparator);
+extern void printpLL(Collection* c, printor);
+extern void* startLL(Collection* c);
+extern void* nextLL(Collection* c);
+extern int endLL(Collection* c);
 
 const struct Collection CollectionForLinkedList = { addLL,
                                     removeLL,

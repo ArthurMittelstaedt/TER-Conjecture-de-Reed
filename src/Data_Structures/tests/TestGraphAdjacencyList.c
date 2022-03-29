@@ -5,9 +5,9 @@ int main(void) {
     printGraphAl(g);
     addVertex(g, 1); // 1 
     printGraphAl(g);
-    addVertex(g, 2); // 2
+    addVertex(g, 2); // 1  2
     printGraphAl(g);
-    addVertex(g, 2); // 2
+    addVertex(g, 2); // 1  2
     printGraphAl(g);
     addEdge(g, 2, 1); // 1--2
     printGraphAl(g);

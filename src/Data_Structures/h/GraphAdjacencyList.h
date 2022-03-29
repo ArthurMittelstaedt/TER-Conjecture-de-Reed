@@ -1,27 +1,32 @@
-#ifndef GRAPHADJACENCYLIST
-#define  GRAPHADJACENCYLIST
+#ifndef GRAPH_ADJACENCY_LIST
+#define  GRAPH_ADJACENCY_LIST
 
-#include "Collection.h"
+#include "Set.h"
+typedef void* (*AdjacencyListConstructor)(void);
 
-typedef struct VertexAdjacencyList
+typedef struct VertexAL VertexAL;
+
+struct VertexAL
 {
     // vertex's identifier, unique among the graph
     unsigned char id;
     // adjacency list
-    struct Collection* neighbours;
-} VertexAdjacencyList;
-
-extern void addVertex(struct GraphAdjacencyList* g, unsigned char v);
-extern void addEdge(struct GraphAdjacencyList* g, unsigned char u, unsigned char v);
-extern void removeVetex(struct GraphAdjacencyList* g, unsigned char v);
-extern void removeEdge(struct GraphAdjacencyList* g, unsigned char u, unsigned char v);
-
-typedef void* (*AdjacencyListConstructor)(void);
-
-typedef struct GraphAdjacencyList
+    struct SetOfVertices* neighbours;
+};
+typedef struct GraphAL GraphAL;
+struct GraphAL
 {
     // List of the graph's vertices
-    struct Collection* vertices;
-    AdjacencyListConstructor constructor;
-} GraphAdjacencyList;
+    struct Set* vertices;
+    AdjacencyListConstructor ALconstructor;
+};
+
+extern void addVertex(struct GraphAL* g, unsigned char v);
+extern void addEdge(struct GraphAL* g, unsigned char u, unsigned char v);
+extern void removeVetex(struct GraphAL* g, unsigned char v);
+extern void removeEdge(struct GraphAL* g, unsigned char u, unsigned char v);
+extern GraphAL* constructorGraphAL(void* (*vertexALSetConstructor)(void), AdjacencyListConstructor);
+extern void destroyGraphAL(GraphAL* g);
+extern static printor vertexPrinter(void* e);
+extern void printGraphAl(GraphAL* g);
 #endif

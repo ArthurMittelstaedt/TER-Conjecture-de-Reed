@@ -21,7 +21,7 @@ void addLLV(LinkedListOfV* l, vertexId v)
 
 // Returns the NodeV of the list wich containts v
 // returns NULL if v is absent.
-static NodeV* findE(struct LinkedListOfV* l, vertexId v) {
+static NodeV* findNode(struct LinkedListOfV* l, vertexId v) {
     NodeV* n = l->head;
     while (n != NULL && n->id != v) {
         n = n->next;
@@ -33,7 +33,7 @@ static NodeV* findE(struct LinkedListOfV* l, vertexId v) {
 // deconnecting it.
 // No effect if v is absent. 
 void removeLLV(LinkedListOfV* l, vertexId v) {
-    NodeV* n = findE(l, v);
+    NodeV* n = findNode(l, v);
     if (n != NULL) {
         if (n->prev != NULL) {
             n->prev->next = n->next;
@@ -64,7 +64,7 @@ void printLLV(LinkedListOfV* l) {
 }
 
 int containsLLV(LinkedListOfV* l, vertexId e) {
-    NodeV* n = findE(l, e);
+    NodeV* n = findNode(l, e);
     return (n == NULL) ? FALSE : TRUE;
 }
 
@@ -92,6 +92,7 @@ extern vertexId startLLV(LinkedListOfV* l) {
     return l->curr->id;
 }
 
+// Faiblaisse remove en cours de parcours!!!!!
 extern vertexId nextLLV(LinkedListOfV* l) {
     l->curr = l->curr->next;
     return l->curr->id;

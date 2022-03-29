@@ -1,5 +1,5 @@
-#ifndef LINKEDLIST
-#define  LINKEDLIST
+#ifndef LINKED_LIST_OF_V
+#define  LINKED_LIST_OF_V
 
 #include "../h/SetOfVertices.h"
 typedef struct NodeV NodeV;
@@ -18,15 +18,15 @@ struct LinkedListOfV
     NodeV* curr;
 };
 
-extern void addLLV(LinkedListOfV* c, vertexId v);
-extern void removeLLV(LinkedListOfV* c, vertexId v);
-extern void printLLV(LinkedListOfV* c);
-extern int containsLLV(LinkedListOfV* c, vertexId v);
+extern void addLLV(LinkedListOfV* l, vertexId v);
+extern void removeLLV(LinkedListOfV* l, vertexId v);
+extern void printLLV(LinkedListOfV* l);
+extern int containsLLV(LinkedListOfV* l, vertexId v);
 extern LinkedListOfV* constructorLLV();
-extern void destroyLLV(LinkedListOfV* c);
-extern vertexId startLLV(LinkedListOfV* c);
-extern vertexId nextLLV(LinkedListOfV* c);
-extern int endLLV(LinkedListOfV* c);
+extern void destroyLLV(LinkedListOfV* l);
+extern vertexId startLLV(LinkedListOfV* l);
+extern vertexId nextLLV(LinkedListOfV* l);
+extern int endLLV(LinkedListOfV* l);
 extern LinkedListOfV* constructorLinkedList();
 
 const SetOfV SetOfVForLinkedList = { (void (*)(SetOfV*, vertexId)) addLLV,

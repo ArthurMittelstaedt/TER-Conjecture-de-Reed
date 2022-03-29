@@ -3,26 +3,26 @@
 #include "../h/LinkedList.h"
 
 // Adds a vertex at the head of the list
-void addLL(Collection* c, void* e)
+void addLL(LinkedList* l, void* e)
 {
-    struct LinkedList* l = (struct LinkedList*)c;
-    struct Node* oldHead = l->head;
-    struct Node* newHead = (struct Node*)malloc(sizeof(struct Node));
-    newHead->e = e;
-    newHead->next = oldHead;
-    newHead->prev = NULL;
-    l->head = newHead;
-    if (oldHead != NULL) {
-        oldHead->prev = newHead;
+    if (containsLL(l, e)) {
+        struct Node* oldHead = l->head;
+        struct Node* newHead = (struct Node*)malloc(sizeof(struct Node));
+        newHead->e = e;
+        newHead->next = oldHead;
+        newHead->prev = NULL;
+        l->head = newHead;
+        if (oldHead != NULL) {
+            oldHead->prev = newHead;
+        }
     }
 };
 
 // Returns the first node of the list wich containts v
 // returns NULL if v is absent.
-static struct Node* findE(struct LinkedList* c, void* e) {
-    struct LinkedList* l = c;
+static struct Node* findNode(LinkedList* l, void* e) {
     Node* n = l->head;
-    while (n != NULL && n->e != e) {
+    while (n != NULL && !l->comparator(n->e, e)) {
         n = n->next;
     }
     return n;
@@ -31,9 +31,8 @@ static struct Node* findE(struct LinkedList* c, void* e) {
 // Removes a vertex v if it's present by searching for its node then 
 // deconnecting it.
 // No effect if v is absent. 
-void removeLL(Collection* c, void* e) {
-    struct LinkedList* l = (struct LinkedList*)c;
-    Node* n = findE(l, e);
+void removeLL(LinkedList* l, void* e) {
+    Node* n = findNode(l, e);
     if (n != NULL) {
         if (n->prev != NULL) {
             n->prev->next = n->next;
@@ -48,40 +47,36 @@ void removeLL(Collection* c, void* e) {
     }
 };
 
-void printLL(Collection* c) {
-    struct LinkedList* l = (struct LinkedList*)c;
+void printLL(LinkedList* l) {
     printf("[");
     struct Node* n = l->head;
     while (n != NULL) {
         if (n->next != NULL) {
-            printf("%d, ", n->e);
+            l->printor(n->e);
+            printf(", ", n->e);
         }
         else {
-            printf("%d", n->e);
+            l->printor(n->e);
         }
         n = n->next;
     }
     printf("]\n");
 }
 
-#define TRUE 1
-#define FALSE 0
-int containsLL(Collection* c, void* e) {
-    struct LinkedList* l = (LinkedList*)c;
-    Node* n = findE(l, e);
+int containsLL(LinkedList* l, void* e) {
+    Node* n = findNode(l, e);
     return (n == NULL) ? FALSE : TRUE;
 }
 
-Collection* constructorLL() {
+LinkedList* constructorLL() {
     LinkedList* l = (LinkedList*)malloc(sizeof(struct LinkedList));
-    l->Collection = CollectionForLinkedList;
+    l->super = SetForLinkedList;
     l->head = NULL;
     l->curr = NULL;
-    return  (void*)l;
+    return  l;
 }
 
-void destroyLL(Collection* c) {
-    LinkedList* l = (LinkedList*)c;
+void destroyLL(LinkedList* l) {
     struct Node* n = l->head;
     struct Node* prev = n;
     while (n != NULL) {
@@ -92,44 +87,23 @@ void destroyLL(Collection* c) {
     free(l);
 }
 
-void* findLL(Collection* c, void* e, comparator comp) {
-    struct LinkedList* l = (struct LinkedList*)c;
+void* findLL(LinkedList* l, void* e) {
     Node* n = l->head;
-    while (n != NULL && !comp(n->e, e)) {
+    while (n != NULL && !l->comparator(n->e, e)) {
         n = n->next;
     }
     return (n == NULL) ? NULL : n->e;
 }
 
-extern void printpLL(Collection* c, printor p) {
-    struct LinkedList* l = (struct LinkedList*)c;
-    printf("[");
-    struct Node* n = l->head;
-    while (n != NULL) {
-        if (n->next != NULL) {
-            p(n->e);
-            printf(", ");
-        }
-        else {
-            p(n->e);
-        }
-        n = n->next;
-    }
-    printf("]\n");
-};
-
-extern void* startLL(Collection* c) {
-    LinkedList* l = (LinkedList*)c;
+extern void* startLL(LinkedList* l) {
     l->curr = l->head;
     return l->curr->e;
 }
 
-extern void* nextLL(Collection* c) {
-    LinkedList* l = (LinkedList*)c;
+extern void* nextLL(LinkedList* l) {
     l->curr = l->curr->next;
     return l->curr->e;
 }
-extern int endLL(Collection* c) {
-    LinkedList* l = (LinkedList*)c;
+extern int endLL(LinkedList* l) {
     return l->curr->next == NULL;
 }

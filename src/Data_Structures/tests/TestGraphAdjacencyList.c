@@ -1,7 +1,7 @@
-#include "../c/GraphAdjacencyList.C"
+#include "../c/GraphAL.C"
 #include "../c/LinkedList.c"
 int main(void) {
-    GraphAdjacencyList* g = constructorGraphAL(constructorLL, constructorLL);
+    GraphAL* g = constructorGraphAL(constructorLL, constructorLL);
     printGraphAl(g);
     addVertex(g, 1); // 1 
     printGraphAl(g);

@@ -1,32 +1,22 @@
 #ifndef GRAPH_ADJACENCY_LIST
 #define  GRAPH_ADJACENCY_LIST
 
-#include "Set.h"
+#include "SetOfVAL.h"
 #include "SetOfVertices.h"
-typedef SetOfV* (*AdjacencyListConstructor)(void);
 
-typedef struct VertexAL VertexAL;
-
-struct VertexAL
-{
-    // vertex's identifier, unique among the graph
-    unsigned char id;
-    // adjacency list
-    struct SetOfV* neighbours;
-};
 typedef struct GraphAL GraphAL;
 struct GraphAL
 {
     // List of the graph's vertices
-    struct Set* vertices;
-    AdjacencyListConstructor ALconstructor;
+    struct SetOfVAL* vertices;
+    SetOfV* (*ALconstructor)(void);
 };
 
 extern void addVertex(struct GraphAL* g, unsigned char v);
 extern void addEdge(struct GraphAL* g, unsigned char u, unsigned char v);
 extern void removeVetex(struct GraphAL* g, unsigned char v);
 extern void removeEdge(struct GraphAL* g, unsigned char u, unsigned char v);
-extern GraphAL* constructorGraphAL(Set* (*vertexALSetConstructor)(void), AdjacencyListConstructor);
+extern GraphAL* constructorGraphAL(SetOfVAL* (*vertexALSetConstructor)(void), SetOfV* (*ALconstructor)(void));
 extern void destroyGraphAL(GraphAL* g);
 extern void printGraphAl(GraphAL* g);
 #endif

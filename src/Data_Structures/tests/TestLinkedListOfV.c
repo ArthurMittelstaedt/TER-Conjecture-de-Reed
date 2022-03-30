@@ -19,5 +19,4 @@ void testAsSetOfV() {
 
 int main(void) {
     testAsSetOfV();
-    return 0;
 }

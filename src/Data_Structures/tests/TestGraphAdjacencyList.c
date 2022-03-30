@@ -1,7 +1,11 @@
-#include "../c/GraphAL.C"
+#include "../c/GraphAdjacencyList.c"
+#include "../c/LinkedListOfV.c"
 #include "../c/LinkedList.c"
+#include <stdio.h>
+
 int main(void) {
-    GraphAL* g = constructorGraphAL(constructorLL, constructorLL);
+    printf("\tWWWWWWWWWWWWWWW\tWWWWWW\n");
+    GraphAL* g = constructorGraphAL((Set * (*)(void))constructorLL, (SetOfV * (*)(void))constructorLLV);
     printGraphAl(g);
     addVertex(g, 1); // 1 
     printGraphAl(g);
@@ -25,4 +29,5 @@ int main(void) {
     printGraphAl(g);
     removeVetex(g, 2); // 1  3
     printGraphAl(g);
+    return 0;
 }

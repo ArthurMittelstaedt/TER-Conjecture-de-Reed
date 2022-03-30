@@ -3,9 +3,9 @@
 #include "../h/LinkedList.h"
 
 // Adds a vertex at the head of the list
-void addLL(LinkedList* l, void* e)
+int addLL(LinkedList* l, void* e)
 {
-    if (containsLL(l, e)) {
+    if (!containsLL(l, e)) {
         struct Node* oldHead = l->head;
         struct Node* newHead = (struct Node*)malloc(sizeof(struct Node));
         newHead->e = e;
@@ -15,14 +15,15 @@ void addLL(LinkedList* l, void* e)
         if (oldHead != NULL) {
             oldHead->prev = newHead;
         }
-    }
+        return TRUE;
+    } return FALSE;
 };
 
 // Returns the first node of the list wich containts v
 // returns NULL if v is absent.
 static struct Node* findNode(LinkedList* l, void* e) {
     Node* n = l->head;
-    while (n != NULL && !l->comparator(n->e, e)) {
+    while (n != NULL && !l->super->comparator(n->e, e)) {
         n = n->next;
     }
     return n;
@@ -31,7 +32,7 @@ static struct Node* findNode(LinkedList* l, void* e) {
 // Removes a vertex v if it's present by searching for its node then 
 // deconnecting it.
 // No effect if v is absent. 
-void removeLL(LinkedList* l, void* e) {
+int removeLL(LinkedList* l, void* e) {
     Node* n = findNode(l, e);
     if (n != NULL) {
         if (n->prev != NULL) {
@@ -44,7 +45,8 @@ void removeLL(LinkedList* l, void* e) {
             n->next->prev = n->prev;
         }
         free(n);
-    }
+        return TRUE;
+    } return FALSE;
 };
 
 void printLL(LinkedList* l) {
@@ -52,11 +54,11 @@ void printLL(LinkedList* l) {
     struct Node* n = l->head;
     while (n != NULL) {
         if (n->next != NULL) {
-            l->printor(n->e);
+            l->super->printor(n->e);
             printf(", ", n->e);
         }
         else {
-            l->printor(n->e);
+            l->super->printor(n->e);
         }
         n = n->next;
     }
@@ -68,11 +70,12 @@ int containsLL(LinkedList* l, void* e) {
     return (n == NULL) ? FALSE : TRUE;
 }
 
-LinkedList* constructorLL() {
+LinkedList* constructorLL(comparator c, printor f) {
     LinkedList* l = (LinkedList*)malloc(sizeof(struct LinkedList));
-    l->super = SetForLinkedList;
+    l->super = &SetForLinkedList;
     l->head = NULL;
     l->curr = NULL;
+    l->next = NULL;
     return  l;
 }
 
@@ -89,7 +92,15 @@ void destroyLL(LinkedList* l) {
 
 void* findLL(LinkedList* l, void* e) {
     Node* n = l->head;
-    while (n != NULL && !l->comparator(n->e, e)) {
+    while (n != NULL && !l->super->comparator(n->e, e)) {
+        n = n->next;
+    }
+    return (n == NULL) ? NULL : n->e;
+}
+
+void* findCompLL(LinkedList* l, void* e, int (*comp)(void*, void*)) {
+    Node* n = l->head;
+    while (n != NULL && !comp(n->e, e)) {
         n = n->next;
     }
     return (n == NULL) ? NULL : n->e;
@@ -97,13 +108,20 @@ void* findLL(LinkedList* l, void* e) {
 
 extern void* startLL(LinkedList* l) {
     l->curr = l->head;
+    if (l->next != NULL) {
+        l->next = l->curr->next;
+    }
+    else {
+        l->next = NULL;
+    }
     return l->curr->e;
 }
 
 extern void* nextLL(LinkedList* l) {
-    l->curr = l->curr->next;
+    l->curr = l->next;
+    l->next = l->curr->next;
     return l->curr->e;
 }
 extern int endLL(LinkedList* l) {
-    return l->curr->next == NULL;
+    return l->next == NULL;
 }

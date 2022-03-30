@@ -21,7 +21,7 @@ void addLLV(LinkedListOfV* l, vertexId v)
 
 // Returns the NodeV of the list wich containts v
 // returns NULL if v is absent.
-static NodeV* findNode(struct LinkedListOfV* l, vertexId v) {
+static NodeV* findNodeV(struct LinkedListOfV* l, vertexId v) {
     NodeV* n = l->head;
     while (n != NULL && n->id != v) {
         n = n->next;
@@ -33,7 +33,7 @@ static NodeV* findNode(struct LinkedListOfV* l, vertexId v) {
 // deconnecting it.
 // No effect if v is absent. 
 void removeLLV(LinkedListOfV* l, vertexId v) {
-    NodeV* n = findNode(l, v);
+    NodeV* n = findNodeV(l, v);
     if (n != NULL) {
         if (n->prev != NULL) {
             n->prev->next = n->next;
@@ -64,7 +64,7 @@ void printLLV(LinkedListOfV* l) {
 }
 
 int containsLLV(LinkedListOfV* l, vertexId e) {
-    NodeV* n = findNode(l, e);
+    NodeV* n = findNodeV(l, e);
     return (n == NULL) ? FALSE : TRUE;
 }
 

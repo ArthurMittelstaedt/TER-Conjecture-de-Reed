@@ -8,10 +8,10 @@ typedef struct NodeN NodeN;
 
 struct NodeN {
     VertexId id; //node
-    NodeV* pv; //ladresse du noeud v qui contient le sommet d'identifiant id
-    NodeN* next;
-    NodeN* prev;
-    NodeN* pn;
+    struct NodeV* pv; //ladresse du noeud v qui contient le sommet d'identifiant id
+    struct NodeN* next;
+    struct NodeN* prev;
+    struct NodeN* pn;
 };
 
 typedef struct LLN LLN;
@@ -36,7 +36,7 @@ LLN* newLLN(void);//Done
 void destroyLLN(LLN*);//Done
 NodeN* newNodeN(VertexId); //Done
 void destroyNodeN(NodeN*);  //Done
-int containN(LLN*, VertexId); // pas besoin pour le moment 
+int containsN(LLN*, VertexId); // pas besoin pour le moment 
 
 
 #endif

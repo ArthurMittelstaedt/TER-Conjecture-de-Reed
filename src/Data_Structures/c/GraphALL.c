@@ -1,5 +1,8 @@
 #include <stdlib.h>
-#include "GraphALL.h"
+#include "../h/GraphALL.h"
+#include "LLN.c"
+#include "LLV.C"
+
 GraphALL* newGraphALL() {
     GraphALL* g = (GraphALL*)malloc(sizeof(GraphALL));
     g->vertices = newLLV();
@@ -17,17 +20,17 @@ void addVertexALL(GraphALL* g, VertexId v) {
 void addEdgeALL(GraphALL* g, VertexId v, VertexId u) {
     NodeV* nvV = findV(g->vertices, v);
     if (nvV == NULL) return;
-    NodeV* nvU = findV(g->vertices, v);
-    if (nvV == NULL) return;
-    AddNodeN(nvU->neighbours, v);            //                     this line            
-    NodeN* NNVinNVU = nvU->neighbours->head; // <- this line must floow ↑
-    AddNodeN(nvV->neighbours, u);            //                     this line  
-    NodeN* NNUinNVV = nvV->neighbours->head; // <- this line must floow ↑
+    NodeV* nvU = findV(g->vertices, u);
+    if (nvU == NULL) return;
+    AddNodeN(nvU->neighbours, v);            //                    this line            
+    NodeN* NNVinNVU = nvU->neighbours->head; // <- this line must flow ↑
+    AddNodeN(nvV->neighbours, u);            //                    this line  
+    NodeN* NNUinNVV = nvV->neighbours->head; // <- this line must flow ↑
     NNVinNVU->pn = NNUinNVV;
     NNVinNVU->pv = nvU;
     NNUinNVV->pn = NNVinNVU;
     NNUinNVV->pv = nvV;
-}
+};
 
 void removeVertexALL(GraphALL* g, VertexId v) {
     NodeV* nvV = findV(g->vertices, v);
@@ -59,7 +62,11 @@ int containsVertexALL(GraphALL* g, VertexId v) {
 int containsEdgeALL(GraphALL* g, VertexId v, VertexId u) {
     NodeV* nvV = findV(g->vertices, v);
     if (nvV != NULL) {
-        return containN(nvV->neighbours, u);
+        return containsN(nvV->neighbours, u);
     }
     else return 0;
+}
+
+void printGraphALL(GraphALL* g) {
+    printV(g->vertices);
 }

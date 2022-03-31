@@ -19,8 +19,14 @@ void addEdgeALL(GraphALL* g, VertexId v, VertexId u) {
     if (nvV == NULL) return;
     NodeV* nvU = findV(g->vertices, v);
     if (nvV == NULL) return;
-    AddNodeN(nvU->neighbours, v);
-    AddNodeN(nvV->neighbours, u);
+    AddNodeN(nvU->neighbours, v);            //                     this line            
+    NodeN* NNVinNVU = nvU->neighbours->head; // <- this line must floow ↑
+    AddNodeN(nvV->neighbours, u);            //                     this line  
+    NodeN* NNUinNVV = nvV->neighbours->head; // <- this line must floow ↑
+    NNVinNVU->pn = NNUinNVV;
+    NNVinNVU->pv = nvU;
+    NNUinNVV->pn = NNVinNVU;
+    NNUinNVV->pv = nvV;
 }
 
 void removeVertexALL(GraphALL* g, VertexId v) {
@@ -29,7 +35,7 @@ void removeVertexALL(GraphALL* g, VertexId v) {
     NodeN* cur_neighbour = nvV->neighbours->head;
     while (cur_neighbour != NULL) {
         removeN(cur_neighbour->pv->neighbours, cur_neighbour->pn);
-        cur_neighbour->next;
+        cur_neighbour = cur_neighbour->next;
     }
     removeV(g->vertices, nvV);
 };
@@ -37,45 +43,23 @@ void removeVertexALL(GraphALL* g, VertexId v) {
 void removeEdgeALL(GraphALL* g, VertexId v, VertexId u) {
     NodeV* nvV = findV(g->vertices, v);
     if (nvV == NULL) return;
-    NodeN* nnU = findN(nvU->neighbours, u);
+    NodeN* nnU = findN(nvV->neighbours, u);
     if (nnU == NULL) return;
     NodeV* nvU = nnU->pv;
-    removeN(nvV->neighbours, nnU->pn);
-    removeN(nvU->neighbours, )
-
+    NodeN* NNUinNVV = nnU->pn;
+    NodeN* NNVinNVU = nnU->pn->pn;
+    removeN(nvV->neighbours, NNUinNVV);
+    removeN(nvU->neighbours, NNVinNVU);
 };
 
+int containsVertexALL(GraphALL* g, VertexId v) {
+    return containsV(g->vertices, v);
+};
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-void containsVertexALL(GraphALL* g, VertexId v);
 int containsEdgeALL(GraphALL* g, VertexId v, VertexId u) {
-    NodeV* cur = findV(g->vertices, v);
-    NodeN* vneigh = cur->pv;
-    if (conatins)
-
-
-
-
-
+    NodeV* nvV = findV(g->vertices, v);
+    if (nvV != NULL) {
+        return containN(nvV->neighbours, u);
+    }
+    else return 0;
 }

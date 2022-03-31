@@ -36,7 +36,7 @@ LLN* newLLN(void);//Done
 void destroyLLN(LLN*);//Done
 NodeN* newNodeN(VertexId); //Done
 void destroyNodeN(NodeN*);  //Done
-//int* containN(LLN*); // pas besoin pour le moment 
+int containN(LLN*, VertexId); // pas besoin pour le moment 
 
 
 #endif

@@ -14,7 +14,7 @@ extern void addVertexALL(GraphALL* g, VertexId v);
 extern void addEdgeALL(GraphALL* g, VertexId v, VertexId u);
 extern void removeVertexALL(GraphALL* g, VertexId v);
 extern void removeEdgeALL(GraphALL* g, VertexId v, VertexId u);
-extern void containsVertexALL(GraphALL* g, VertexId v);
-extern void containsEdgeALL(GraphALL* g, VertexId v, VertexId u);
+extern int containsVertexALL(GraphALL* g, VertexId v);
+extern int containsEdgeALL(GraphALL* g, VertexId v, VertexId u);
 
 #endif

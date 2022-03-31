@@ -180,6 +180,7 @@ void removeN(LLN* AL, NodeN* n) { // ici le n c'est le np de lemelent que j veut
 LLN* newLLN(void) {
     LLN* l = malloc(sizeof(LLN));
     l->head = NULL;
+    return l;
 }
 
 

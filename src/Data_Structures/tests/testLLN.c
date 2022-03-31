@@ -18,7 +18,7 @@ int main() {
     NodeN* nz = findN(list, 'z');
     //printf("%d\n", (nz == NULL) ? 1 : 0);
     removeN(list, nz);
-    printf("%d", containsN(list, 'a'));
+    printf("%d", containsN(list, 'b'));
     printf("%d", containsN(list, 'z'));
     printLLN(list);
 }

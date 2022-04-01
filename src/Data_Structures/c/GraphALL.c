@@ -27,9 +27,9 @@ void addEdgeALL(GraphALL* g, VertexId v, VertexId u) {
     AddNodeN(nvV->neighbours, u);            //                    this line  
     NodeN* NNUinNVV = nvV->neighbours->head; // <- this line must flow ↑
     NNVinNVU->pn = NNUinNVV;
-    NNVinNVU->pv = nvU;
+    NNVinNVU->pv = nvV;
     NNUinNVV->pn = NNVinNVU;
-    NNUinNVV->pv = nvV;
+    NNUinNVV->pv = nvU;
 };
 
 void removeVertexALL(GraphALL* g, VertexId v) {
@@ -49,8 +49,8 @@ void removeEdgeALL(GraphALL* g, VertexId v, VertexId u) {
     NodeN* nnU = findN(nvV->neighbours, u);
     if (nnU == NULL) return;
     NodeV* nvU = nnU->pv;
-    NodeN* NNUinNVV = nnU->pn;
-    NodeN* NNVinNVU = nnU->pn->pn;
+    NodeN* NNUinNVV = nnU->pn->pn;
+    NodeN* NNVinNVU = nnU->pn;
     removeN(nvV->neighbours, NNUinNVV);
     removeN(nvU->neighbours, NNVinNVU);
 };

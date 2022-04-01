@@ -180,6 +180,7 @@ void removeN(LLN* AL, NodeN* n) { // ici le n c'est le np de lemelent que j veut
 LLN* newLLN(void) {
     LLN* l = malloc(sizeof(LLN));
     l->head = NULL;
+    l->length = 0;
     return l;
 }
 
@@ -203,7 +204,7 @@ void destroyNodeN(NodeN* n) {
 void printLLN(LLN* AL) {
     NodeN* cur = AL->head;
     printf("[");
-    while (cur) { // tant que L est different de null = !isEmpty(AL)
+    while (cur != NULL) { // tant que L est different de null = !isEmpty(AL)
         if (cur->next != NULL) {
             printf("%c", cur->id);
             printf(", ");

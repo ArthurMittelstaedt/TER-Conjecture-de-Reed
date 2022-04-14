@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "../h/GraphALL.h"
 #include "LLN.c"
-#include "LLV.C"
+#include "LLV.c"
 
 GraphALL* newGraphALL() {
     GraphALL* g = (GraphALL*)malloc(sizeof(GraphALL));
@@ -69,4 +69,12 @@ int containsEdgeALL(GraphALL* g, VertexId v, VertexId u) {
 
 void printGraphALL(GraphALL* g) {
     printV(g->vertices);
+}
+
+void resetColALL(GraphALL* g) {
+    NodeV* cur = g->vertices->head;
+    while (cur != NULL) {
+        cur->col = 0;
+        cur = cur->next;
+    }
 }

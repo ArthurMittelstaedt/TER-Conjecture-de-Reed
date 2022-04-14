@@ -10,11 +10,14 @@
 // As we will work on small graphs ~20 vertices, we chose the smallest
 // type available.
 typedef unsigned char VertexId;
+// We don't need more colors than vertices.
+typedef VertexId Color;
 
 // Node of a Linked List of vertices
 typedef struct NodeV NodeV;
 struct NodeV {
     VertexId id;// Id of the vertex
+    Color col; // Color of the vertex, value 0 means no color
     struct LLN* neighbours; // List of the vertex's neighbours
     struct NodeV* next; // Next node
     struct NodeV* prev; // previous node
@@ -26,12 +29,12 @@ typedef struct LLV {
 } LLV;
 
 
-// Allocate the memory for a node for a vertex with id = id
-// and empty neighbourhood
+// Allocate the memory for a node for a vertex with id = id,
+// empty neighbourhood and no color (col=0)
 extern NodeV* newNodeV(VertexId id);
 
 // Frees the memory of a node, including its neigbourhood list
-extern void destroyNodeV(NodeV* n);
+extern void destroyNodeV(NodeV* n, int destroy_neighbour);
 
 // Allocate the memory for an empty linked list of vertices
 extern LLV* newLLV();

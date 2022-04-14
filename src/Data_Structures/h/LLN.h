@@ -5,6 +5,7 @@
 typedef unsigned char VertexId;
 
 typedef struct NodeN NodeN;
+typedef VertexId Color;
 
 struct NodeN {
     VertexId id; //node
@@ -22,21 +23,21 @@ struct LLN
 };
 
 
-int isEmptyN(LLN*); //Done
+extern int isEmptyN(LLN*); //Done
 //int* AddNodeAtN(LLN*, int, int); 
 //int* AddNodeSorted(LLN*, int);
-void AddNodeN(LLN*, VertexId); //Done
+extern void AddNodeN(LLN*, VertexId); //Done
 //int getNodeAt(LLN*, int);
 //void setNodeAt(LLN*, int, int);
-NodeN* findN(LLN*, VertexId id);
-void removeN(LLN*, NodeN*);
-void printLLN(LLN*); //Done
+extern NodeN* findN(LLN*, VertexId id);
+extern void removeN(LLN*, NodeN*);
+extern void printLLN(LLN*); //Done
 //LLN* SortAL(LLN* AL);
-LLN* newLLN(void);//Done
-void destroyLLN(LLN*);//Done
-NodeN* newNodeN(VertexId); //Done
-void destroyNodeN(NodeN*);  //Done
-int containsN(LLN*, VertexId); // pas besoin pour le moment 
-
+extern LLN* newLLN(void);//Done
+extern void destroyLLN(LLN*);//Done
+extern NodeN* newNodeN(VertexId); //Done
+extern void destroyNodeN(NodeN*);  //Done
+extern int containsN(LLN*, VertexId); // pas besoin pour le moment 
+extern LLN* copyLLN(LLN*);
 
 #endif

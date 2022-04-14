@@ -5,14 +5,16 @@
 NodeV* newNodeV(VertexId id) {
     NodeV* nnv = (NodeV*)malloc(sizeof(NodeV));
     nnv->id = id;
+    nnv->col = 0;
     nnv->neighbours = newLLN();
     nnv->next = NULL;
     nnv->prev = NULL;
 };
 
-void destroyNodeV(NodeV* n) {
+void destroyNodeV(NodeV* n, int destroy_neighbour) {
     if (n != NULL) {
-        destroyLLN(n->neighbours);
+        if (destroy_neighbour)
+            destroyLLN(n->neighbours);
         free(n);
     }
 };
@@ -30,7 +32,7 @@ void destroyLLV(LLV* l) {
         while (next != NULL) {
             cur = next;
             next = cur->next;
-            destroyNodeV(cur);
+            destroyNodeV(cur, 1);
         }
     }
 };
@@ -58,7 +60,7 @@ void removeV(LLV* l, NodeV* n) {
         if (n->next != NULL) {
             n->next->prev = n->prev;
         }
-        destroyNodeV(n);
+        destroyNodeV(n, 1);
         l->length -= 1;
     }
 };

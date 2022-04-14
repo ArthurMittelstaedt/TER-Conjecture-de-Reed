@@ -12,6 +12,7 @@ NodeN* newNodeN(VertexId id) {
     newNode->prev = NULL;
     newNode->pn = NULL;
     newNode->pv = NULL;
+
     return newNode;
 }
 
@@ -215,4 +216,17 @@ void printLLN(LLN* AL) {
         cur = cur->next; //pour que à chaque itération on parcours chacun des elements 
     }
     printf("]\n");
+}
+
+// Copies the list l, inverts the order of nodes
+LLN* copyLLN(LLN* l) {
+    LLN* clone = newLLN();
+    NodeN* cur = l->head;
+    while (cur != NULL) {
+        AddNodeN(clone, cur->id);
+        clone->head->pv = cur->pv;
+        clone->head->pn = cur->pn;
+        cur = cur->next;
+    }
+    return clone;
 }

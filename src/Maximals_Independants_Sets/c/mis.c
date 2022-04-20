@@ -1,7 +1,7 @@
 #include "../c/LLmis.c"
 
 NodeV* findMaximalVertex(LLV* SUBG, LLV* CAND);
-LLV* LLVinterLLN(LLV* lv, LLN* ln);
+LLV* LLVinterLLN(LLV* lv, LLN* ln, VertexId vertexToKeep);
 LLV* LLVminusLLN(LLV* lv, LLN* ln, VertexId vertexToExclude);
 LLMIS* maximal_independant_sets(GraphALL* g);
 void expand(LLV* SUBG, LLV* CAND);
@@ -31,10 +31,9 @@ void expand(LLV* SUBG, LLV* CAND) {
     }
     else {
         NodeV* u = findMaximalVertex(SUBG, CAND);
-        LLV* CANDinterNU = LLVinterLLN(CAND, u->neighbours);
-        addV(CANDinterNU, u->id); free(CANDinterNU->head->neighbours)/*remove later*/;CANDinterNU->head->neighbours = u->neighbours;
-        while (!isEmptyV(CANDinterNU)) {
-            NodeV* q = CANDinterNU->head;
+        LLV* EXTu = LLVinterLLN(CAND, u->neighbours, u->id);
+        while (!isEmptyV(EXTu)) {
+            NodeV* q = EXTu->head;
             addV(Q, q->id); free(Q->head->neighbours)/*remove later*/; Q->head->neighbours = q->neighbours;
             NodeV* qinQ = Q->head;
 
@@ -46,20 +45,21 @@ void expand(LLV* SUBG, LLV* CAND) {
             destroyLLV(SUBGq, 0);
             destroyLLV(CANDq, 0);
             NodeV* qinCAND = findV(CAND, q->id);
-            NodeV* qinCANDinterNU = findV(CANDinterNU, q->id);
+            NodeV* qinCANDinterNU = findV(EXTu, q->id);
             removeV(CAND, qinCAND, 0);
-            removeV(CANDinterNU, qinCANDinterNU, 0);
+            removeV(EXTu, qinCANDinterNU, 0);
             removeV(Q, qinQ, 0);
         }
     }
 }
 
-LLV* LLVinterLLN(LLV* lv, LLN* ln) {
+LLV* LLVinterLLN(LLV* lv, LLN* ln, VertexId vertexToKeep) {
     LLV* intersection = newLLV();
     NodeV* cur = lv->head;
     while (cur != NULL) {
-        if (containsN(ln, cur->id)) {
+        if (cur->id == vertexToKeep || containsN(ln, cur->id)) {
             addV(intersection, cur->id);
+            free(intersection->head->neighbours);// move later
             intersection->head->neighbours = cur->neighbours;
         }
         cur = cur->next;

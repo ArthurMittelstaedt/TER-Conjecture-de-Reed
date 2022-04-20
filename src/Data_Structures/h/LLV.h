@@ -41,7 +41,7 @@ extern LLV* newLLV();
 
 // Frees the moemory of a linked list of vertices
 // including all its nodes.
-extern void destroyLLV(LLV* l);
+extern void destroyLLV(LLV* l, int destroy_neighbour);
 
 // Adds a new node at the head, for a vertex with id = id 
 // and empty neighbourhood
@@ -51,7 +51,7 @@ extern void addV(LLV* l, VertexId id);
 // Removes the node n from the list
 // A. E. : n is indeed a node of the list
 //         && l != NULL
-extern void removeV(LLV* l, NodeV* n);
+extern void removeV(LLV* l, NodeV* n, int destroy_neighbour);
 
 // Returns 1 if l contains a node with vertex id = id
 // 0 otherwise.
@@ -66,4 +66,6 @@ extern NodeV* findV(LLV* l, VertexId id);
 // Prints the list l on default output.
 // A. E. : != NULL
 extern void printV(LLV* l);
+
+extern int isEmptyV(LLV* l);
 #endif

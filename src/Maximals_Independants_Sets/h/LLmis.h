@@ -1,7 +1,7 @@
 #ifndef LLMIS_H
 #define LLMIS_H
 
-#include "../../Data_Structures/c/LLN.c"
+#include "../../Data_Structures/c/graphALL.c"
 
 // mis = maximal independant set
 typedef struct NodeMIS NodeMIS;
@@ -14,10 +14,11 @@ struct NodeMIS {
 typedef struct LLMIS LLMIS;
 struct LLMIS {
     NodeMIS* head;
+    int length;
 };
 
 // Allocate the memory for a node with given list representing an ipendant set
-extern NodeMIS* newNodeMIS(MIS* mis);
+extern NodeMIS* newNodeMIS(LLV* mis);
 
 // Frees the memory of a node, including its mis
 extern void destroyNodeMIS(NodeMIS* n);
@@ -31,7 +32,7 @@ extern void destroyLLMIS(LLMIS* l);
 
 // Adds a new node at the head, with given mis
 // A. E. : l != NULL
-extern void addV(LLMIS* l, MIS mis);
+extern void addMIS(LLMIS* l, LLV* mis);
 
 // Removes the node n from the list
 // A. E. : n is indeed a node of the list
@@ -51,4 +52,5 @@ extern void addV(LLMIS* l, MIS mis);
 // Prints the list l on default output.
 // A. E. : != NULL
 extern void printMIS(LLMIS* l);
+
 #endif

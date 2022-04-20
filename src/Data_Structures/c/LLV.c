@@ -25,14 +25,14 @@ LLV* newLLV() {
     l->head = NULL;
 };
 
-void destroyLLV(LLV* l) {
+void destroyLLV(LLV* l, int destroy_neighbour) {
     if (l != NULL) {
         NodeV* cur = NULL;
         NodeV* next = l->head;
         while (next != NULL) {
             cur = next;
             next = cur->next;
-            destroyNodeV(cur, 1);
+            destroyNodeV(cur, destroy_neighbour);
         }
     }
 };
@@ -49,7 +49,7 @@ void addV(LLV* l, VertexId id) {
 };
 
 
-void removeV(LLV* l, NodeV* n) {
+void removeV(LLV* l, NodeV* n, int destroy_neighbour) {
     if (n != NULL) {
         if (n->prev == NULL) {
             l->head = n->next;
@@ -60,7 +60,7 @@ void removeV(LLV* l, NodeV* n) {
         if (n->next != NULL) {
             n->next->prev = n->prev;
         }
-        destroyNodeV(n, 1);
+        destroyNodeV(n, destroy_neighbour);
         l->length -= 1;
     }
 };
@@ -88,3 +88,19 @@ void printV(LLV* l) {
     }
     printf("]\n");
 };
+
+int isEmptyV(LLV* l) {
+    return l->head == NULL;
+}
+
+// copies l but not deep copy
+LLV* copyLLV(LLV* l) {
+    LLV* clone = newLLV();
+    NodeV* cur = l->head;
+    while (cur != NULL) {
+        addV(clone, cur->id);
+        clone->head->neighbours = cur->neighbours;
+        cur = cur->next;
+    }
+    return clone;
+}

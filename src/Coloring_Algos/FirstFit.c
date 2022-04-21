@@ -21,7 +21,6 @@ struct V_perm {
 };
 
 // Implementation of the Steinhaus–Johnson–Trotter algorithm
-
 void printPerm(V_perm* p) {
     for (int i = 0; i < p->length; i++) {
         if (i <= p->length - 1) {

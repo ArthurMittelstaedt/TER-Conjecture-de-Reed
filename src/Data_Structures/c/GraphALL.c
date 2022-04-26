@@ -79,9 +79,51 @@ void resetColALL(GraphALL* g) {
     }
 }
 
-GraphALL* copyGraphALL(GraphALL* g){
+GraphALL* copyGraphALL(GraphALL* g) {
     GraphALL* clone = newGraphALL();
-    clone->vertices = copyLLV(g->vertices)
-    NodeV* curClone = clone->head;
-    NodeV*
+    NodeV* curVG = g->vertices->head;
+    if (curVG != NULL) {
+        // Copy of the vertices in the right order
+        NodeV* curVC = newNodeV(curVG->id);
+        clone->vertices->head = curVC;
+        curVG = curVG->next;
+        while (curVG != NULL) {
+            NodeV* nextVC = newNodeV(curVG->id);
+            nextVC->prev = curVC;
+            curVC->next = nextVC;
+            curVC = nextVC;
+            curVG = curVG->next;
+        }
+        clone->vertices->length = g->vertices->length;
+        // Adding edge
+        curVG = g->vertices->head;
+        while (curVG != NULL) {
+            NodeN* curNG = curVG->neighbours->head;
+            while (curNG != NULL) {
+                addEdgeALL(clone, curVG->id, curNG->id);
+                curNG = curNG->next;
+            }
+            curVG = curVG->next;
+        }
+
+    }
 }
+
+/*
+GraphALL* copyGraphALL(GraphALL* g) {
+    GraphALL* clone = newGraphALL();
+    clone->vertices = copyLLV(g->vertices);
+    NodeV* curVClone = clone->vertices->head;
+    NodeV* curVG = g->vertices->head;
+    while (curVClone != NULL) {
+        curVClone->neighbours = copyLLN(curVG->neighbours);
+        NodeN* curNClone = curVClone->neighbours->head;
+        NodeN* curNG = curVG->neighbours->head;
+        while (curNClone != NULL) {
+            curNClone->pv;
+            curNClone->pn;
+        }
+        curVClone = curVClone->next;
+        curVG = curVG->next;
+    }
+}*/

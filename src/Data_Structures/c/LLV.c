@@ -96,11 +96,21 @@ int isEmptyV(LLV* l) {
 // copies l but not deep copy
 LLV* copyLLV(LLV* l) {
     LLV* clone = newLLV();
-    NodeV* cur = l->head;
-    while (cur != NULL) {
-        addV(clone, cur->id);
-        clone->head->neighbours = cur->neighbours;
-        cur = cur->next;
+    NodeV* curl = l->head;
+    if (curl != NULL) {
+        NodeV* curc = newNodeV(curl->id);
+        curc->neighbours = curl->neighbours;
+        clone->head = curc;
+        curl = curl->next;
+        while (curl != NULL) {
+            NodeV* nextc = newNodeV(curl->id);
+            nextc->neighbours = curl->neighbours;
+            curc->next = nextc;
+            nextc->prev = curc;
+            curc = nextc;
+            curl = curl->next;
+        }
+        clone->length = l->length;
     }
     return clone;
 }

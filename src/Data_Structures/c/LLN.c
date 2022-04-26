@@ -219,14 +219,37 @@ void printLLN(LLN* AL) {
 }
 
 // Copies the list l, inverts the order of nodes
+// LLN* copyLLN(LLN* l) {
+//     LLN* clone = newLLN();
+//     NodeN* cur = l->head;
+//     while (cur != NULL) {
+//         AddNodeN(clone, cur->id);
+//         clone->head->pv = cur->pv;
+//         clone->head->pn = cur->pn;
+//         cur = cur->next;
+//     }
+//     return clone;
+// }
+
 LLN* copyLLN(LLN* l) {
     LLN* clone = newLLN();
-    NodeN* cur = l->head;
-    while (cur != NULL) {
-        AddNodeN(clone, cur->id);
-        clone->head->pv = cur->pv;
-        clone->head->pn = cur->pn;
-        cur = cur->next;
+    NodeN* curl = l->head;
+    if (curl != NULL) {
+        NodeN* curc = newNodeN(curl->id);
+        curc->pv = curl->pv;
+        curc->pn = curl->pn;
+        clone->head = curc;
+        curl = curl->next;
+        while (curl != NULL) {
+            NodeN* nextc = newNodeN(curl->id);
+            nextc->pv = curl->pv;
+            nextc->pn = curl->pn;
+            curc->next = nextc;
+            nextc->prev = curc;
+            curc = nextc;
+            curl = curl->next;
+        }
+        clone->length = l->length;
     }
     return clone;
 }

@@ -34,6 +34,10 @@ void addEdgeALL(GraphALL* g, VertexId v, VertexId u) {
 
 void removeVertexALL(GraphALL* g, VertexId v) {
     NodeV* nvV = findV(g->vertices, v);
+    removeVertexNodeALL(g, nvV);
+};
+
+void removeVertexNodeALL(GraphALL* g, NodeV* nvV) {
     if (nvV == NULL) return;
     NodeN* cur_neighbour = nvV->neighbours->head;
     while (cur_neighbour != NULL) {
@@ -41,7 +45,7 @@ void removeVertexALL(GraphALL* g, VertexId v) {
         cur_neighbour = cur_neighbour->next;
     }
     removeV(g->vertices, nvV, 1);
-};
+}
 
 void removeEdgeALL(GraphALL* g, VertexId v, VertexId u) {
     NodeV* nvV = findV(g->vertices, v);

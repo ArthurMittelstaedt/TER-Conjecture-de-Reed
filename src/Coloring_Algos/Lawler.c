@@ -35,7 +35,7 @@ Color Lawler(GraphALL* g) {
 
     int length = g->vertices->length;
     //number of grpahs in g without the empty one
-    int nb_sub_graph = pow(2, length);
+    int nb_sub_graph = 1 << length;
 
     //the tab where we will coloriate all subgraphs
     // TODO change int for VertexId
@@ -70,7 +70,7 @@ Color Lawler(GraphALL* g) {
             else {
                 // Current bit is set to 0
                 // then remove it from Sub_g and remove it from LLneightours of the other vertices 
-                removeVertexALL(Sub_g, cur);
+                removeVertexNodeALL(Sub_g, cur);
             }
             //pass to the next bit , and also to the next vertex
             cur = next;

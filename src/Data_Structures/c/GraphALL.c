@@ -78,3 +78,10 @@ void resetColALL(GraphALL* g) {
         cur = cur->next;
     }
 }
+
+GraphALL* copyGraphALL(GraphALL* g){
+    GraphALL* clone = newGraphALL();
+    clone->vertices = copyLLV(g->vertices)
+    NodeV* curClone = clone->head;
+    NodeV*
+}

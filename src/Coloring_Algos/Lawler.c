@@ -1,103 +1,105 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "../Data_Structures/c/GraphALL.c"
-
+#include "../Maximals_Independants_sets/c/mis.c"
 
 typedef enum BOOL BOOL;
 enum BOOL { FALSE, TRUE };
 
 
-
-
-
-//given a integer k un a size n of vetercies, it returns the binary number ok k in n bits
-GraphALL* int_bin_subg(int k,GraphALL* g ){
-    int length = g->vertices->length;
-    BOOL* binary_version = (BOOL*)malloc(length* sizeof(BOOL));
-    //int to binary
-    for(int i=0; k>0; i++){
-        binary_version[i]= k%2;
-        k=k/2;
-    }
-    //binary to subg
-    NodeV* cur = g->vertices->head;
-    GraphALL* Sub_g = newGraphALL();
-    //make coy of the original graph 
-    Sub_g=g;
-    // parcourir les sommets du nv graphe
-    NodeV* cur = Sub_g->vertices->head;
-    //if i eme bit ==0 then remove the vertex corresponding 
-    for(int i =0; i<length ; i++){
-        if(binary_version[i]==0){
-            //remove it from the sub graph
-            // it removes the vertex from the other vertices's neighbors also
-            removeVertexALL(Sub_g, cur);
-        }
-        cur =cur-> next;
-    }
-    return Sub_g;
-}
-
-
-GraphALL* S_I(GraphALL* S,NodeV* I ){
+int find_int_I(GraphALL* S,LLV* mis ){
     NodeV* cur = S->vertices->head;
-    while(cur != NULL){
-        removeVertexALL(S, cur);
-        cur=cur->next;
+    int intmis = 0; // 32 fois zero
+    //LLV* mis = I->head->mis;
+    int pos = 0
+    while  (cur != NULL &&  pos != 32 ){
+        if(containsV(mis, cur->id)==1){
+            //je mets 1 dans cette pos (je décale le 1 qui est 2^0 en binaire à la position pos)
+            intmis = intmis | (1<<pos);
+        }
+        //else je laisse 0
+        //pass to the next bit , and also to the next vertex
+        cur==cur->next;
+        pos++
     }
-    return S;
-
+    return intmis;
 }
+
+
+
+
 
 Color Lawler (GraphALL* g){
     
     int length = g->vertices->length;
     //number of grpahs in g without the empty one
-    int nb_sub_graph=pow(2,length) - 1;
+    int nb_sub_graph=pow(2,length);
 
     //the tab where we will coloriate all subgraphs
-    Color* X = (Color*)malloc(nb_sub_graph * sizeof(Color)); //How to do : X[subgraph]  not X[Color]
+    // TODO change int for VertexId
+    int* X = (int*)malloc(nb_sub_graph * sizeof(int)); //car j'ai choisi les S des int (32 bit)
     // initate X
-    //for (int i=0; i<length; i++){
-        //=0 if S is empty  ... done
-        //=1 if S->vertices->length ==1
-        //=length else
-    //}
+    // if empty graph then 0
+    X[0]=0;
+    // if only one vertex int the graph then 1
+    int start_from = 1;
+    for(int i=1; i<nb_sub_graph; i<<1){
+        for(int j = start_from; j < i; j++){
+            X[j] = length;
+        }
+        X[i] = 1;
+        start_from = i + 1;
+    }
+    for(int j = start_from; j < nb_sub_graph; j++){
+            X[j] = length;
+    }   
+      
     
-    // je parcours les sommets du graphe g
-    NodeV* cur = g->vertices->head;
-    while (cur != NULL) {
-        for (int S = 0 ; S < nb_sub_graph ; S++) {
-            GraphALL* Sub_g = newGraphALL();
-            Sub_g = int_bin_subg(S, g );
-            if (Sub_g->vertices->length !=0){
-                //calculate MIS of Sub_g
-                NodeV* I = NULL;
-                while(I!=NULL){
-                    I = findMaximalVertex(Sub_g, LLV* CAND);// CAND?? and is Sub_g LLV* or Sub_g->vertices->head???
-                     while(I!=NULL){
-                     //S_I(Sub_g,I)=S\I
-                     // should I put X[S] or X[Sub_g]
-                        X[Sub_g]=(X[Sub_g]> X[S_I(Sub_g,I)])? X[S_I(Sub_g,I)]:X[S];// ?????
-                        I=I->next;
-                     }
-                
-
-                }
+    for (int S = 0 ; S < nb_sub_graph ; S++) {
+        GraphALL* Sub_g = copyGraphALL(g);
+        NodeV* cur = Sub_g->vertices->head;
+        NodeV* next = cur->next;
+        int pos = 0 ;
+        while  (cur != NULL && pos != 32){
+            if (S & (1 << pos)) {
+                // Current bit is set to 1
+                 // do nothing ; keep the vertex in the graph
+            } else {
+                // Current bit is set to 0
+                // then remove it from Sub_g and remove it from LLneightours of the other vertices 
+                removeVertexALL(Sub_g, cur);
             }
-            else X[S]=0;
+                 //pass to the next bit , and also to the next vertex
+                cur=next;
+                next=cur->next;
+                pos++;
             
+        }
+
+        // ones out from the for loop ; we have the subgraph S
+        // we compute all the MIS of this subgraph:
+
+        if (Sub_g->vertices->length !=0 && Sub_g->vertices->length !=1 ){ //already done
+            //calculate MIS of Sub_g
+            // linked list of all sub-g's maximal independent sets
+            LLMIS* I =  maximal_independant_sets(Sub_g) ; 
+            // the current independant set 
+            NodeMIS* curmis = I->head; 
             
+            while(curmis!=NULL){
+                LLV* incurmis = curmis->mis;
+                int intmis = find_int_I(S, incurmis);
+                X[S]=(X[S]> X[S & (~intmis)]+1)? X[S & (~intmis)]:X[S];
+                curmis = curmis-> next; // next mis
+            }
+            destroyLLMIS(I);
+        }
         destroyGraphALL(Sub_g);
-        cur=cur->next;
+        
     }
-    }
-    //return le max des X : X[V] // je m'en occupe une fois réglé le problème de l'instance   
-    return X;
+    
+    //return X[V]   
+    return X[nb_sub_graph - 1];
     
 
-
-
-
-  
 }

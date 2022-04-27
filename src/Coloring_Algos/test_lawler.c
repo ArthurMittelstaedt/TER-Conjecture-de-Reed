@@ -1,20 +1,20 @@
 #include "Lawler.c"
 #include <stdio.h>
 
-int main(void) {
-    printf("salut\n");
+int main() {
+    printf("hi");
     GraphALL* g = newGraphALL();
     addVertexALL(g, 'a'); // 'a'
     addVertexALL(g, 'b'); // 'b'
     addVertexALL(g, 'c'); // 'c'
-    addVertexALL(g, 'd'); // 'd'
-    addVertexALL(g, 'e'); // 'e'
-    addVertexALL(g, 'f'); // 'f'
-    addVertexALL(g, 'g'); // 'g'
-    addVertexALL(g, 'h'); // 'h'
-    addVertexALL(g, 'i'); // 'i'
-    addVertexALL(g, 'j'); // 'j'
-    addVertexALL(g, 'k'); // 'k'
+    //addVertexALL(g, 'd'); // 'd'
+    //addVertexALL(g, 'e'); // 'e'
+    //addVertexALL(g, 'f'); // 'f'
+    //addVertexALL(g, 'g'); // 'g'
+    //addVertexALL(g, 'h'); // 'h'
+    //addVertexALL(g, 'i'); // 'i'
+    //addVertexALL(g, 'j'); // 'j'
+    //addVertexALL(g, 'k'); // 'k'
     // AIcha
     addEdgeALL(g, 'e', 'a'); // 'a'--'b'
     addEdgeALL(g, 'c', 'd'); // 'a'--'b'
@@ -43,4 +43,6 @@ int main(void) {
 
     printf("The chromatic number of the Grötzsch graph is %d", Lawler(g));
 
-    printGraphALL(g);printf("\n");
+    //printGraphALL(g);printf("\n");
+
+}

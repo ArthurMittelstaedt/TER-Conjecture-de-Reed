@@ -1,4 +1,4 @@
-#include "../c/mis.c"
+#include "../c/mis.c" // c'est pas #include "mis.c" plutot ?
 
 void addToAll(LLMIS* is_with_u, NodeV* u);
 void addList(LLMIS* is_with_u, LLMIS* is_without_u);

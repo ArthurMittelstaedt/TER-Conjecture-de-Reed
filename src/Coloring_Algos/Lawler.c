@@ -91,7 +91,7 @@ Color Lawler(GraphALL* g) {
 
             while (curmis != NULL) {
                 LLV* incurmis = curmis->mis;
-                int intmis = find_int_I(S, incurmis);
+                int intmis = find_int_I(Sub_g, incurmis);
                 X[S] = (X[S] > X[S & (~intmis)] + 1) ? X[S & (~intmis)] : X[S];
                 curmis = curmis->next; // next mis
             }

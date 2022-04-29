@@ -45,7 +45,7 @@ Color Lawler(GraphALL* g) {
     X[0] = 0;
     // if only one vertex int the graph then 1
     int start_from = 1;
-    for (int i = 1; i < nb_sub_graph; i << 1) {
+    for (int i = 1; i < nb_sub_graph; i = i << 1) {
         for (int j = start_from; j < i; j++) {
             X[j] = length;
         }
@@ -74,7 +74,7 @@ Color Lawler(GraphALL* g) {
             }
             //pass to the next bit , and also to the next vertex
             cur = next;
-            next = cur->next;
+            next = cur == NULL ? NULL : cur->next;
             pos++;
 
         }

@@ -41,6 +41,7 @@ int main() {
     addEdgeALL(g, 'k', 'h'); // 'a'--'b'
     addEdgeALL(g, 'j', 'e'); // 'a'--'b'
 
+    printGraphALL(g);
     printf("The chromatic number of the Grötzsch graph is %d", Lawler(g));
 
     //printGraphALL(g);printf("\n");

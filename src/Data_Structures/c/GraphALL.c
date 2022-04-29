@@ -111,6 +111,7 @@ GraphALL* copyGraphALL(GraphALL* g) {
         }
 
     }
+    return clone;
 }
 
 /*

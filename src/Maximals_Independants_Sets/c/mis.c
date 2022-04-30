@@ -10,10 +10,10 @@ void expand(LLV* SUBG, LLV* CAND);
 typedef LLMIS LL;
 
 LLV* Q;
-LLMIS* g_mis_list;
+LLMIS* g_mis_list = NULL;
 
 LLMIS* maximal_independant_sets(GraphALL* g) {
-    destroyLLMIS(g_mis_list);
+    //destroyLLMIS(g_mis_list);
     g_mis_list = newLLMIS(); // comprehensive list of g's mis
     destroyLLV(Q, 0);
     Q = newLLV();

@@ -101,13 +101,18 @@ GraphALL* copyGraphALL(GraphALL* g) {
         clone->vertices->length = g->vertices->length;
         // Adding edge
         curVG = g->vertices->head;
+        curVC = clone->vertices->head;
         while (curVG != NULL) {
             NodeN* curNG = curVG->neighbours->head;
             while (curNG != NULL) {
-                addEdgeALL(clone, curVG->id, curNG->id);
+                //printf("adding edge %c to %c", curVG->id, curNG->id);
+                // adding directed edge
+                AddNodeN(curVC->neighbours, curNG->id);
+                // pn and pv field will be messed up
                 curNG = curNG->next;
             }
             curVG = curVG->next;
+            curVC = curVC->next;
         }
 
     }

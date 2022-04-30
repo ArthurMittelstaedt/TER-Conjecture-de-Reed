@@ -160,16 +160,24 @@ NodeN* findN(LLN* AL, VertexId id) {
 }
 
 
+void destroyNodeN(NodeN* n) {
+    free(n);
+} 
+
 void removeN(LLN* AL, NodeN* n) { // ici le n c'est le np de lemelent que j veut supp
     if (n != NULL) {
         NodeN* prev = n->prev;
         NodeN* next = n->next;
         destroyNodeN(n);
-        if (prev != NULL) {
-            prev->next = next;
+        //if (prev != NULL) {
+            //prev->next = next;
+        //}
+        if (n->prev == NULL) {
+            AL->head = next;
         }
         else {
-            AL->head = next;
+            //AL->head = next;
+            prev->next = next;
         }
         if (next != NULL)
             next->prev = prev;
@@ -198,9 +206,7 @@ void destroyLLN(LLN* AL) {
 }
 
 
-void destroyNodeN(NodeN* n) {
-    free(n);
-}
+
 
 void printLLN(LLN* AL) {
     NodeN* cur = AL->head;

@@ -48,29 +48,41 @@ Color Lawler(GraphALL* g) {
     for (int i = 1; i < nb_sub_graph; i = i << 1) {
         for (int j = start_from; j < i; j++) {
             X[j] = length;
+            
         }
         X[i] = 1;
+        //printf("cas = 1 X[S]=: %d \n" , X[i]);
+        //printf("i correspondant: %d \n" ,i);
         start_from = i + 1;
     }
     for (int j = start_from; j < nb_sub_graph; j++) {
         X[j] = length;
+        //printf("length is : %d \n", length);
+        //printf("cas >1 X[S]=: %d \n" , X[j]);
+        //printf("j correspondant: %d \n" ,j);
     }
 
 
-    for (int S = 0; S < nb_sub_graph; S++) {
+    for (int S =0 ; S < nb_sub_graph; S++) {
         GraphALL* Sub_g = copyGraphALL(g);
         NodeV* cur = Sub_g->vertices->head;
         NodeV* next = cur->next;
         int pos = 0;
-        while (cur != NULL && pos != 32) {
+        while (cur != NULL && pos != length) {
             if (S & (1 << pos)) {
                 // Current bit is set to 1
                  // do nothing ; keep the vertex in the graph
             }
             else {
                 // Current bit is set to 0
-                // then remove it from Sub_g and remove it from LLneightours of the other vertices 
+                // then remove it from Sub_g and remove it from LLneightours of the other vertices
+                printf("before :");
+                printGraphALL(Sub_g); 
+                printf("vetrex to remove : %c \n" , cur->id);
+                //printLLN(cur->id);
                 removeVertexNodeALL(Sub_g, cur);
+                printf("after :");
+                printGraphALL(Sub_g);
             }
             //pass to the next bit , and also to the next vertex
             cur = next;
@@ -78,7 +90,8 @@ Color Lawler(GraphALL* g) {
             pos++;
 
         }
-
+        printf("the current subgraph");
+        printGraphALL(Sub_g);
         // ones out from the for loop ; we have the subgraph S
         // we compute all the MIS of this subgraph:
 
@@ -93,6 +106,7 @@ Color Lawler(GraphALL* g) {
                 LLV* incurmis = curmis->mis;
                 int intmis = find_int_I(Sub_g, incurmis);
                 X[S] = (X[S] > X[S & (~intmis)] + 1) ? X[S & (~intmis)] : X[S];
+                
                 curmis = curmis->next; // next mis
             }
             destroyLLMIS(I);

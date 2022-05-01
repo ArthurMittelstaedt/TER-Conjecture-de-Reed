@@ -12,16 +12,28 @@ enum BOOL { FALSE, TRUE };
 int find_int_I(GraphALL* S, LLV* mis) {
     NodeV* cur = S->vertices->head;
     int intmis = 0; // 32 fois zero
+    int length = S->vertices->length;
     //LLV* mis = I->head->mis;
+    printf("mis %c \n :", mis->head->id);
+    printf("taille du mis: %d \n", mis->length);
     int pos = 0;
-    while (cur != NULL && pos != 32) {
+    while (cur != NULL && pos < length) {
         if (containsV(mis, cur->id) == 1) {
             //je mets 1 dans cette pos (je décale le 1 qui est 2^0 en binaire à la position pos)
+            //printf("current vertex : %c \n ", cur->id);
+            //printf("intmis avant : %d \n  ", intmis);
             intmis = intmis | (1 << pos);
+            //printf("intmis apres : %d \n  ", intmis);
+            //printf("avec pos %d \n ", pos);
+            cur = cur->next;
+
+        }
+        else {
+            cur = cur->next;
         }
         //else je laisse 0
         //pass to the next bit , and also to the next vertex
-        cur == cur->next;
+        
         pos++;
     }
     return intmis;
@@ -68,7 +80,7 @@ Color Lawler(GraphALL* g) {
         NodeV* cur = Sub_g->vertices->head;
         NodeV* next = cur->next;
         int pos = 0;
-        while (cur != NULL && pos != length) {
+        while (cur != NULL && pos != 32) {
             if (S & (1 << pos)) {
                 // Current bit is set to 1
                  // do nothing ; keep the vertex in the graph
@@ -76,13 +88,13 @@ Color Lawler(GraphALL* g) {
             else {
                 // Current bit is set to 0
                 // then remove it from Sub_g and remove it from LLneightours of the other vertices
-                printf("before :");
-                printGraphALL(Sub_g); 
-                printf("vetrex to remove : %c \n" , cur->id);
+                //printf("before :");
+                //printGraphALL(Sub_g); 
+                //printf("vetrex to remove : %c \n" , cur->id);
                 //printLLN(cur->id);
                 removeVertexNodeALL(Sub_g, cur);
-                printf("after :");
-                printGraphALL(Sub_g);
+                //printf("after :");
+                //printGraphALL(Sub_g);
             }
             //pass to the next bit , and also to the next vertex
             cur = next;
@@ -90,12 +102,12 @@ Color Lawler(GraphALL* g) {
             pos++;
 
         }
-        printf("the current subgraph");
-        printGraphALL(Sub_g);
         // ones out from the for loop ; we have the subgraph S
         // we compute all the MIS of this subgraph:
 
         if (Sub_g->vertices->length != 0 && Sub_g->vertices->length != 1) { //already done
+            printf("the current subgraph after the if \n ");
+            printGraphALL(Sub_g);
             //calculate MIS of Sub_g
             // linked list of all sub-g's maximal independent sets
             LLMIS* I = maximal_independant_sets(Sub_g);
@@ -105,18 +117,37 @@ Color Lawler(GraphALL* g) {
             while (curmis != NULL) {
                 LLV* incurmis = curmis->mis;
                 int intmis = find_int_I(Sub_g, incurmis);
-                X[S] = (X[S] > X[S & (~intmis)] + 1) ? X[S & (~intmis)] : X[S];
+                //printf("X[S] avant le min = %d , \n", X[S]);
+                //X[S] = (X[S] <= (X[S & (~intmis)] + 1)) ?  X[S] : X[S & (~intmis)] ;
+                if((X[S & (~intmis)] + 1 ) < X[S]){
+                    X[S]= (X[S & (~intmis)] + 1 );
+                }
+                
+                //printf("S est = %d \n", S);
+                /*printf("S-I est = %d \n",S & (~intmis));
+                printf("X[S-I] : %d \n", (X[S & (~intmis)]  ) );
+                printf("X[S-I]+1 : %d \n", (X[S & (~intmis)] + 1 ) );*/
+                //printf("X[S] apres le min = %d , \n", X[S]);
+                /*printf("mis is : %c \n" , incurmis->head->id);
+                printf("mis is : %d \n" , incurmis->length);
+                printf("S est = %d \n", S);
+                printf("I est = %d \n", intmis);
+                */
+                
                 
                 curmis = curmis->next; // next mis
             }
+
             destroyLLMIS(I);
         }
+        printf("X[S]= %d \n", X[S]);
         destroyGraphALL(Sub_g);
+
 
     }
 
     //return X[V]   
-    return X[nb_sub_graph - 1];
+    return (X[nb_sub_graph - 1]);
 
 
 }

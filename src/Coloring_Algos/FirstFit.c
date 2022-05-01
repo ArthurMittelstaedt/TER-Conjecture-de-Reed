@@ -204,7 +204,7 @@ Color FirstFitchromatic_number(GraphALL* g) {
     Color chromatic_number = FirstFit(perm->vertices, length);
     int i = 1;//--------
     while (nextPerm(perm) != FALSE) {
-        printf("perm N ° %d\n", i);
+        //printf("perm N ° %d\n", i);
         resetColALL(g);
         Color cur_chrom_number = FirstFit(perm->vertices, length);
         chromatic_number = (cur_chrom_number > chromatic_number) ? chromatic_number : cur_chrom_number;

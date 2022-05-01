@@ -93,34 +93,7 @@ Color Lawler(GraphALL* g) {
     int nextPow = 4;
     for (int S = 2; S < nb_sub_graph; S++) {
         if (S != nextPow) {
-            GraphALL* Sub_g = copyGraphALL(g);
-            NodeV* cur = Sub_g->vertices->head;
-            NodeV* next = cur->next;
-            int pos = 0;
-            while (cur != NULL && pos != 32) {
-                if (S & (1 << pos)) {
-                    // Current bit is set to 1
-                     // do nothing ; keep the vertex in the graph
-                }
-                else {
-                    // Current bit is set to 0
-                    // then remove it from Sub_g and remove it from LLneightours of the other vertices
-                    //printf("before :");
-                    //printGraphALL(Sub_g); 
-                    //printf("vetrex to remove : %c \n" , cur->id);
-                    //printLLN(cur->id);
-                    removeVertexNodeALL(Sub_g, cur);
-                    //printf("after :");
-                    //printGraphALL(Sub_g);
-                }
-                //pass to the next bit , and also to the next vertex
-                cur = next;
-                next = cur == NULL ? NULL : cur->next;
-                pos++;
-
-            }
-            // ones out from the for loop ; we have the subgraph S
-            // we compute all the MIS of this subgraph:
+            GraphALL* Sub_g = subGraphALL(g, S);
 
 
             //printf("the current subgraph after the if \n ");

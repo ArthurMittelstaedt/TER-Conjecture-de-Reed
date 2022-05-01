@@ -1,10 +1,10 @@
 #ifndef LLV_H
 #define LLV_H
+#include "LLN.h"
 // Linked List of vertices :
 // A linked list of vertices, each node contains a vertex represented
 // by its id and it's neighbours;
 // Multiples entries can share their id
-#include "LLN.h"
 
 // Definition of the type for representing vertex ids
 // As we will work on small graphs ~20 vertices, we chose the smallest

@@ -1,5 +1,6 @@
 #ifndef LLN_H
 #define LLN_H
+
 #include "LLV.h"
 
 typedef unsigned char VertexId;
@@ -23,21 +24,16 @@ struct LLN
 };
 
 
-extern int isEmptyN(LLN*); //Done
-//int* AddNodeAtN(LLN*, int, int); 
-//int* AddNodeSorted(LLN*, int);
-extern void AddNodeN(LLN*, VertexId); //Done
-//int getNodeAt(LLN*, int);
-//void setNodeAt(LLN*, int, int);
+extern int isEmptyN(LLN*);
+extern void AddNodeN(LLN*, VertexId);
 extern NodeN* findN(LLN*, VertexId id);
 extern void removeN(LLN*, NodeN*);
-extern void printLLN(LLN*); //Done
-//LLN* SortAL(LLN* AL);
-extern LLN* newLLN(void);//Done
-extern void destroyLLN(LLN*);//Done
-extern NodeN* newNodeN(VertexId); //Done
-extern void destroyNodeN(NodeN*);  //Done
-extern int containsN(LLN*, VertexId); // pas besoin pour le moment 
+extern void printLLN(LLN*);
+extern LLN* newLLN(void);
+extern void destroyLLN(LLN*);
+extern NodeN* newNodeN(VertexId);
+extern void destroyNodeN(NodeN*);
+extern int containsN(LLN*, VertexId);
 extern LLN* copyLLN(LLN*);
 
 #endif

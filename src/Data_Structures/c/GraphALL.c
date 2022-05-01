@@ -83,6 +83,69 @@ void resetColALL(GraphALL* g) {
     }
 }
 
+GraphALL* subGraphALL(GraphALL* g, int subgBits) {
+    GraphALL* subg = newGraphALL();
+    NodeV* curVG = g->vertices->head;
+    NodeV* curVC;
+    int pos = 0;
+    int first = 1;
+    NodeV* idNodeVMap[256] = {};
+    VertexId idPosMap[256] = {};
+    while (curVG != NULL) {
+        if (subgBits & (1 << pos)) {
+            if (first) {
+                curVC = newNodeV(curVG->id);
+                subg->vertices->head = curVC;
+                subg->vertices->length = 1;
+                idNodeVMap[curVC->id] = curVC;
+                first = 0;
+            }
+            else {
+                NodeV* newVC = newNodeV(curVG->id);
+                curVC->next = newVC;
+                newVC->prev = curVC;
+                curVC = newVC;
+                subg->vertices->length++;
+                idNodeVMap[curVC->id] = curVC;
+            }
+            idPosMap[curVC->id] = pos + 1;
+        }
+        curVG = curVG->next;
+        pos++;
+    }
+    curVG = g->vertices->head;
+    curVC = subg->vertices->head;
+    pos = 0;
+    while (curVG != NULL) {
+        if (subgBits & (1 << pos)) {
+            NodeN* curNG = curVG->neighbours->head;
+            while (curNG != NULL) {
+                if (idPosMap[curNG->id] != 0) {
+                    AddNodeN(curVC->neighbours, curNG->id);
+                    NodeV* neighbourNV = idNodeVMap[curNG->id];
+                    curVC->neighbours->head->pv = neighbourNV;
+                    NodeN* curInN = findN(neighbourNV->neighbours, curVC->id);
+                    if (curInN != NULL) {
+                        curVC->neighbours->head->pn = curInN;
+                        curInN->pn = curVC->neighbours->head;
+                    }
+                }
+                curNG = curNG->next;
+            }
+            curVC = curVC->next;
+        }
+        curVG = curVG->next;
+        pos++;
+    }
+    /*
+    printf("Sous graphe produi à partir de : ");
+    affichage_binaire(subgBits);
+    printGraphALL(subg);
+    printf("\n");
+    */
+    return subg;
+}
+
 GraphALL* copyGraphALL(GraphALL* g) {
     GraphALL* clone = newGraphALL();
     NodeV* curVG = g->vertices->head;

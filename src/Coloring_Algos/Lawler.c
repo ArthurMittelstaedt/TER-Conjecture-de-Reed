@@ -9,41 +9,6 @@ typedef enum BOOL BOOL;
 enum BOOL { FALSE, TRUE };
 
 
-int find_int_I(GraphALL* S, LLV* mis) {
-    NodeV* cur = S->vertices->head;
-    int intmis = 0; // 32 fois zero
-    int length = S->vertices->length;
-    //LLV* mis = I->head->mis;
-    /*
-    printf("mis %c \n :", mis->head->id);
-    printf("taille du mis: %d \n", mis->length);
-    */
-    int pos = 0;
-    while (cur != NULL && pos < length) {
-        if (containsV(mis, cur->id) == 1) {
-            //je mets 1 dans cette pos (je décale le 1 qui est 2^0 en binaire à la position pos)
-            //printf("current vertex : %c \n ", cur->id);
-            //printf("intmis avant : %d \n  ", intmis);
-            intmis = intmis | (1 << pos);
-            //printf("intmis apres : %d \n  ", intmis);
-            //printf("avec pos %d \n ", pos);
-            cur = cur->next;
-
-        }
-        else {
-            cur = cur->next;
-        }
-        //else je laisse 0
-        //pass to the next bit , and also to the next vertex
-
-        pos++;
-    }
-    return intmis;
-}
-
-
-
-
 void affichage_binaire(int n)
 {
     int i;
@@ -53,6 +18,14 @@ void affichage_binaire(int n)
 }
 
 Color Lawler(GraphALL* g) {
+    VertexId idPosMap[256] = {};
+    NodeV* curV = g->vertices->head;
+    int w = 0;
+    while (curV != NULL) {
+        idPosMap[curV->id] = w;
+        w++;
+        curV = curV->next;
+    }
 
     int length = g->vertices->length;
     //number of grpahs in g without the empty one
@@ -106,7 +79,12 @@ Color Lawler(GraphALL* g) {
 
             while (curmis != NULL) {
                 LLV* incurmis = curmis->mis;
-                int intmis = find_int_I(g, incurmis);
+
+                int intmis = 0;
+                for (NodeV* cur = incurmis->head; cur != NULL; cur = cur->next) {
+                    intmis = intmis | (1 << (int)idPosMap[cur->id]);
+                }
+
                 //printf("X[S] avant le min = %d , \n", X[S]);
                 //X[S] = (X[S] <= (X[S & (~intmis)] + 1)) ?  X[S] : X[S & (~intmis)] ;
                 if ((X[S & (~intmis)] + 1) < X[S]) {
@@ -144,8 +122,10 @@ Color Lawler(GraphALL* g) {
 
     }
 
-    //return X[V]   
-    return (X[nb_sub_graph - 1]);
+    //return X[V]
+    int chromatic_number = X[nb_sub_graph - 1];
+    free(X);
+    return (chromatic_number);
 
 
 }

@@ -117,17 +117,17 @@ Color Lawler(GraphALL* g) {
             while (curmis != NULL) {
                 LLV* incurmis = curmis->mis;
                 int intmis = find_int_I(Sub_g, incurmis);
-                //printf("X[S] avant le min = %d , \n", X[S]);
+                printf("X[S] avant le min = %d , \n", X[S]);
                 //X[S] = (X[S] <= (X[S & (~intmis)] + 1)) ?  X[S] : X[S & (~intmis)] ;
                 if((X[S & (~intmis)] + 1 ) < X[S]){
                     X[S]= (X[S & (~intmis)] + 1 );
                 }
                 
-                //printf("S est = %d \n", S);
-                /*printf("S-I est = %d \n",S & (~intmis));
-                printf("X[S-I] : %d \n", (X[S & (~intmis)]  ) );
-                printf("X[S-I]+1 : %d \n", (X[S & (~intmis)] + 1 ) );*/
-                //printf("X[S] apres le min = %d , \n", X[S]);
+                printf("S est = %d \n", S);
+                printf("S-I est = %d \n",S & (~intmis));
+                //printf("X[S-I] : %d \n", (X[S & (~intmis)]  ) );
+                printf("X[S-I]+1 : %d \n", (X[S & (~intmis)] + 1 ) );
+                printf("X[S] apres le min = %d , \n", X[S]);
                 /*printf("mis is : %c \n" , incurmis->head->id);
                 printf("mis is : %d \n" , incurmis->length);
                 printf("S est = %d \n", S);
@@ -140,7 +140,7 @@ Color Lawler(GraphALL* g) {
 
             destroyLLMIS(I);
         }
-        printf("X[S]= %d \n", X[S]);
+        //printf("X[S]= %d \n", X[S]);
         destroyGraphALL(Sub_g);
 
 

@@ -33,7 +33,7 @@ int find_int_I(GraphALL* S, LLV* mis) {
         }
         //else je laisse 0
         //pass to the next bit , and also to the next vertex
-        
+
         pos++;
     }
     return intmis;
@@ -42,6 +42,13 @@ int find_int_I(GraphALL* S, LLV* mis) {
 
 
 
+void affichage_binaire(int n)
+{
+    int i;
+    for (i = 31; i >= 0; i--)
+        printf("%d", (n >> i) & 1);
+    printf("\n");
+}
 
 Color Lawler(GraphALL* g) {
 
@@ -59,8 +66,8 @@ Color Lawler(GraphALL* g) {
     int start_from = 1;
     for (int i = 1; i < nb_sub_graph; i = i << 1) {
         for (int j = start_from; j < i; j++) {
-            X[j] = length;
-            
+            X[j] = length * 4;
+
         }
         X[i] = 1;
         //printf("cas = 1 X[S]=: %d \n" , X[i]);
@@ -68,14 +75,21 @@ Color Lawler(GraphALL* g) {
         start_from = i + 1;
     }
     for (int j = start_from; j < nb_sub_graph; j++) {
-        X[j] = length;
+        X[j] = length * 4;
         //printf("length is : %d \n", length);
         //printf("cas >1 X[S]=: %d \n" , X[j]);
         //printf("j correspondant: %d \n" ,j);
     }
 
+    // debugage afficher X
+    printf("X : ");
+    for (int i = 0; i < nb_sub_graph; i++) {
+        printf("%d, ", X[i]);
+    }
+    printf("\n");
+    //
 
-    for (int S =0 ; S < nb_sub_graph; S++) {
+    for (int S = 0; S < nb_sub_graph; S++) {
         GraphALL* Sub_g = copyGraphALL(g);
         NodeV* cur = Sub_g->vertices->head;
         NodeV* next = cur->next;
@@ -116,25 +130,31 @@ Color Lawler(GraphALL* g) {
 
             while (curmis != NULL) {
                 LLV* incurmis = curmis->mis;
-                int intmis = find_int_I(Sub_g, incurmis);
+                int intmis = find_int_I(g, incurmis);
                 printf("X[S] avant le min = %d , \n", X[S]);
                 //X[S] = (X[S] <= (X[S & (~intmis)] + 1)) ?  X[S] : X[S & (~intmis)] ;
-                if((X[S & (~intmis)] + 1 ) < X[S]){
-                    X[S]= (X[S & (~intmis)] + 1 );
+                if ((X[S & (~intmis)] + 1) < X[S]) {
+                    X[S] = (X[S & (~intmis)]) + 1;
                 }
-                
-                printf("S est = %d \n", S);
-                printf("S-I est = %d \n",S & (~intmis));
+
+                printf("S est   = ");
+                affichage_binaire(S);
+                printf("I est   = ");
+                affichage_binaire(intmis);
+                printf("S-I est = ");
+                affichage_binaire(S & (~intmis));
+                printf("I avant traduction binaire:");
+                printV(incurmis);
                 //printf("X[S-I] : %d \n", (X[S & (~intmis)]  ) );
-                printf("X[S-I]+1 : %d \n", (X[S & (~intmis)] + 1 ) );
+                printf("X[S-I]+1 : %d \n", (X[S & (~intmis)] + 1));
                 printf("X[S] apres le min = %d , \n", X[S]);
                 /*printf("mis is : %c \n" , incurmis->head->id);
                 printf("mis is : %d \n" , incurmis->length);
                 printf("S est = %d \n", S);
                 printf("I est = %d \n", intmis);
                 */
-                
-                
+
+
                 curmis = curmis->next; // next mis
             }
 

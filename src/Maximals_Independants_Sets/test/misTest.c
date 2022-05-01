@@ -4,7 +4,8 @@ GraphALL* buildCubeGraph();
 
 
 int main(void) {
-    GraphALL* g = buildCubeGraph();
+    GraphALL* g = newGraphALL();
+    //GraphALL* g = buildCubeGraph();
     LLMIS* m = maximal_independant_sets(g);
     printMIS(m);
 }

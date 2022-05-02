@@ -1,106 +1,100 @@
 #ifndef MIS_C
 #define MIS_C
 
-#include "../c/LLmis.c"
+#include "../../Data_Structures/c/LLSG.c"
 
-NodeV* findMaximalVertex(LLV* SUBG, LLV* CAND);
-LLV* LLVinterLLN(LLV* lv, LLN* ln, VertexId vertexToKeep);
-LLV* LLVminusLLN(LLV* lv, LLN* ln, VertexId vertexToExclude);
-LLMIS* maximal_independant_sets(GraphALL* g);
-void expand(LLV* SUBG, LLV* CAND);
+NodeSV* findMaximalVertex(SG* SUBG, SG* CAND);
+SG* SGinterLLN(SG* lv, LLN* ln, VertexId vertexToKeep);
+SG* SGminusLLN(SG* lv, LLN* ln, VertexId vertexToExclude);
+LLSG* maximal_independant_sets(GraphALL* g);
+void expand(SG* SUBG, SG* CAND);
 
+SG* Q;
+LLSG* g_mis_list = NULL;
 
-typedef LLMIS LL;
-
-LLV* Q;
-LLMIS* g_mis_list = NULL;
-
-LLMIS* maximal_independant_sets(GraphALL* g) {
-    //destroyLLMIS(g_mis_list);
-    g_mis_list = newLLMIS(); // comprehensive list of g's mis
-    destroyLLV(Q, 0);
-    Q = newLLV();
-    LLV* SUBG = copyLLV(g->vertices);
-    LLV* CAND = copyLLV(g->vertices);
+LLSG* maximal_independant_sets(GraphALL* g) {
+    g_mis_list = newLLSG(); // comprehensive list of g's mis
+    destroySG(Q);
+    Q = newSG();
+    SG* SUBG = SGFromLLV(g->vertices);
+    SG* CAND = SGFromLLV(g->vertices);
     expand(SUBG, CAND);
-    destroyLLV(SUBG, 0);
-    destroyLLV(CAND, 0);
+    destroySG(SUBG);
+    destroySG(CAND);
     return g_mis_list;
 }
 
-void expand(LLV* SUBG, LLV* CAND) {
-    if (isEmptyV(SUBG)) {
-        addMIS(g_mis_list, copyLLV(Q));
+void expand(SG* SUBG, SG* CAND) {
+    if (isEmptySV(SUBG)) {
+        addSG(g_mis_list, copySG(Q));
     }
     else {
-        NodeV* u = findMaximalVertex(SUBG, CAND);
-        LLV* EXTu = LLVinterLLN(CAND, u->neighbours, u->id);
-        while (!isEmptyV(EXTu)) {
-            NodeV* q = EXTu->head;
-            addV(Q, q->id); free(Q->head->neighbours)/*remove later*/; Q->head->neighbours = q->neighbours;
-            NodeV* qinQ = Q->head;
+        NodeSV* u = findMaximalVertex(SUBG, CAND);
+        SG* EXTu = SGinterLLN(CAND, u->v->neighbours, u->v->id);
+        while (!isEmptySV(EXTu)) {
+            NodeSV* q = EXTu->head;
+            addSV(Q, q->v);
+            NodeSV* qinQ = Q->head;
 
-            LLV* SUBGq = LLVminusLLN(SUBG, q->neighbours, q->id);
+            SG* SUBGq = SGminusLLN(SUBG, q->v->neighbours, q->v->id);
 
-            LLV* CANDq = LLVminusLLN(CAND, q->neighbours, q->id);
+            SG* CANDq = SGminusLLN(CAND, q->v->neighbours, q->v->id);
 
             expand(SUBGq, CANDq);
-            destroyLLV(SUBGq, 0);
-            destroyLLV(CANDq, 0);
-            NodeV* qinCAND = findV(CAND, q->id);
-            NodeV* qinCANDinterNU = findV(EXTu, q->id);
-            removeV(CAND, qinCAND, 0);
-            removeV(EXTu, qinCANDinterNU, 0);
-            removeV(Q, qinQ, 0);
+            destroySG(SUBGq);
+            destroySG(CANDq);
+            NodeSV* qinCAND = findSV(CAND, q->v->id);
+            NodeSV* qinCANDinterNU = findSV(EXTu, q->v->id);
+            removeSV(CAND, qinCAND);
+            removeSV(EXTu, qinCANDinterNU);
+            removeSV(Q, qinQ);
         }
     }
 }
 
-LLV* LLVinterLLN(LLV* lv, LLN* ln, VertexId vertexToKeep) {
-    LLV* intersection = newLLV();
-    NodeV* cur = lv->head;
+SG* SGinterLLN(SG* lv, LLN* ln, VertexId vertexToKeep) {
+    SG* intersection = newSG();
+    NodeSV* cur = lv->head;
     while (cur != NULL) {
-        if (cur->id == vertexToKeep || containsN(ln, cur->id)) {
-            addV(intersection, cur->id);
-            free(intersection->head->neighbours);// move later
-            intersection->head->neighbours = cur->neighbours;
+        if (cur->v->id == vertexToKeep || containsN(ln, cur->v->id)) {
+            addSV(intersection, cur->v);
         }
         cur = cur->next;
     }
     return intersection;
 }
 
-LLV* LLVminusLLN(LLV* lv, LLN* ln, VertexId vertexToExclude) {
-    LLV* difference = newLLV();
-    NodeV* cur = lv->head;
+SG* SGminusLLN(SG* lv, LLN* ln, VertexId vertexToExclude) {
+    SG* difference = newSG();
+    NodeSV* cur = lv->head;
     while (cur != NULL) {
-        if (vertexToExclude != cur->id && !containsN(ln, cur->id)) {
-            addV(difference, cur->id);
-            difference->head->neighbours = cur->neighbours;
+        if (vertexToExclude != cur->v->id && !containsN(ln, cur->v->id)) {
+            addSV(difference, cur->v);
+            difference->head->v->neighbours = cur->v->neighbours;//----------------??
         }
         cur = cur->next;
     }
     return difference;
 }
 
-NodeV* findMaximalVertex(LLV* SUBG, LLV* CAND) {
-    NodeV* cur = SUBG->head;
-    NodeV* maxU = cur;
-    LLV* maxCANDq = LLVminusLLN(CAND, cur->neighbours, cur->id);
+NodeSV* findMaximalVertex(SG* SUBG, SG* CAND) {
+    NodeSV* cur = SUBG->head;
+    NodeSV* maxU = cur;
+    SG* maxCANDq = SGminusLLN(CAND, cur->v->neighbours, cur->v->id);
     cur = cur->next;
     while (cur != NULL) {
-        LLV* curCANDq = LLVminusLLN(CAND, cur->neighbours, cur->id);
+        SG* curCANDq = SGminusLLN(CAND, cur->v->neighbours, cur->v->id);
         if (curCANDq->length > maxCANDq->length) {
-            destroyLLV(maxCANDq, 0);
+            destroySG(maxCANDq);
             maxCANDq = curCANDq;
             maxU = cur;
         }
         else {
-            destroyLLV(curCANDq, 0);
+            destroySG(curCANDq);
         }
         cur = cur->next;
     }
-    destroyLLV(maxCANDq, 0);
+    destroySG(maxCANDq);
     return maxU;
 
 }

@@ -1,61 +1,62 @@
 #ifndef IS_C
 #define IS_C
 
-#include "../c/mis.c" // c'est pas #include "mis.c" plutot ?
+#include "../../Data_Structures/c/LLSG.c"
+#include "../../Data_Structures/c/GraphALL.c"
 
-void addToAll(LLMIS* is_with_u, NodeV* u);
-void addList(LLMIS* is_with_u, LLMIS* is_without_u);
-LLMIS* independant_sets_r(LLV* V);
+void addToAll(LLSG* is_with_u, NodeV* u);
+void addList(LLSG* is_with_u, LLSG* is_without_u);
 
-LLMIS* independant_sets(GraphALL* g) {
-    LLV* VG = copyLLV(g->vertices);
-    LLMIS* res = independant_sets_r(VG);
+LLSG* independant_sets_r(SG* V);
+
+LLSG* independant_sets(GraphALL* g) {
+    SG* VG = SGFromLLV(g->vertices);
+    LLSG* res = independant_sets_r(VG);
     return res;
 }
 
-LLMIS* independant_sets_r(LLV* V) {
-    if (isEmptyV(V)) {
-        LLMIS* is = newLLMIS();
-        addMIS(is, newLLV());
+LLSG* independant_sets_r(SG* V) {
+    if (isEmptySV(V)) {
+        LLSG* is = newLLSG();
+        addSG(is, newSG());
         return is;
     }
     else {
-        NodeV* u = V->head;
-        LLV* Vminusu = copyLLV(V);
-        NodeV* nodeU = findV(Vminusu, u->id);
-        removeV(Vminusu, nodeU, 0);
-        LLMIS* is_without_u = independant_sets_r(Vminusu);
+        NodeSV* u = V->head;
+        SG* Vminusu = copySG(V);
+        NodeSV* nodeU = findSV(Vminusu, u->v->id);
+        removeSV(Vminusu, nodeU);
+        LLSG* is_without_u = independant_sets_r(Vminusu);
 
-        LLV* VminusNGu = copyLLV(Vminusu);
-        NodeN* curN = u->neighbours->head;
+        SG* VminusNGu = copySG(Vminusu);
+        NodeN* curN = u->v->neighbours->head;
         while (curN != NULL) {
-            NodeV* nodeNeighbour = findV(VminusNGu, curN->id);
-            removeV(VminusNGu, nodeNeighbour, 0);
+            NodeSV* nodeNeighbour = findSV(VminusNGu, curN->id);
+            removeSV(VminusNGu, nodeNeighbour);
             curN = curN->next;
         }
-        LLMIS* is_with_u = independant_sets_r(VminusNGu);
-        addToAll(is_with_u, u);
+        LLSG* is_with_u = independant_sets_r(VminusNGu);
+        addToAll(is_with_u, u->v);
         addList(is_with_u, is_without_u);
-        destroyLLV(VminusNGu, 0);
-        destroyLLV(Vminusu, 0);
+        destroySG(VminusNGu);
+        destroySG(Vminusu);
         free(is_without_u);
         return is_with_u;
     }
 
 };
 
-void addToAll(LLMIS* is_with_u, NodeV* u) {
-    NodeMIS* cur = is_with_u->head;
+void addToAll(LLSG* is_with_u, NodeV* u) {
+    NodeSG* cur = is_with_u->head;
     while (cur != NULL) {
-        addV(cur->mis, u->id);
-        cur->mis->head->neighbours = u->neighbours;
+        addSV(cur->sg, u);
         cur = cur->next;
     }
 }
 
-void addList(LLMIS* is_with_u, LLMIS* is_without_u) {
-    NodeMIS* prec = NULL;
-    NodeMIS* cur = is_with_u->head;
+void addList(LLSG* is_with_u, LLSG* is_without_u) {
+    NodeSG* prec = NULL;
+    NodeSG* cur = is_with_u->head;
     while (cur != NULL) {
         prec = cur;
         cur = cur->next;

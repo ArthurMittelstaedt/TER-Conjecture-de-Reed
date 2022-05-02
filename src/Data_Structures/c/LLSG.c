@@ -3,6 +3,8 @@
 #define LLSG_C
 
 #include "../h/LLSG.h"
+#include "SG.c"
+#include <stdio.h>
 
 NodeSG* newNodeSG(SG* sg) {
     NodeSG* newNode = malloc(sizeof(NodeSG));
@@ -36,7 +38,7 @@ void destroyLLSG(LLSG* l) {
 };
 
 void addSG(LLSG* l, SG* sg) {
-    NodeSG* newHead = newNodeMIS(sg);
+    NodeSG* newHead = newNodeSG(sg);
     NodeSG* oldHead = l->head;
     l->head = newHead;
     newHead->next = oldHead;
@@ -47,7 +49,7 @@ void addSG(LLSG* l, SG* sg) {
 };
 
 // A. E. : != NULL
-void printSG(LLSG* l) {
+void printLLSG(LLSG* l) {
     printf("[\n");
     NodeSG* cur = l->head;
     while (cur != NULL) {

@@ -26,6 +26,6 @@ extern void destroyLLSG(LLSG* l);
 
 extern void addSG(LLSG* l, SG* sg);
 
-extern void printSG(LLSG* l);
+extern void printLLSG(LLSG* l);
 
 #endif

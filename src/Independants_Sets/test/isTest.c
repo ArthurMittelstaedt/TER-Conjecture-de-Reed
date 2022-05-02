@@ -5,8 +5,8 @@ GraphALL* buildCubeGraph();
 
 int main(void) {
     GraphALL* g = buildCubeGraph();
-    LLMIS* m = independant_sets(g);
-    printMIS(m);
+    LLSG* m = independant_sets(g);
+    printLLSG(m);
 }
 
 

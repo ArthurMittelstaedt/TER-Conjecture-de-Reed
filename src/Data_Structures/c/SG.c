@@ -63,11 +63,11 @@ void removeSV(SG* l, NodeSV* v) {
 };
 
 int containsSV(SG* l, VertexId id) {
-    NodeV* nId = findV(l, id);
+    NodeSV* nId = findSV(l, id);
     return (nId == NULL) ? 0 : 1;
 };
 
-NodeSV* findV(LLV* l, VertexId id) {
+NodeSV* findSV(SG* l, VertexId id) {
     NodeSV* cur = l->head;
     while (cur != NULL && cur->v->id != id) {
         cur = cur->next;
@@ -75,7 +75,7 @@ NodeSV* findV(LLV* l, VertexId id) {
     return cur;
 };
 
-void printSV(LLV* l) {
+void printSG(SG* l) {
     printf("[\n");
     NodeSV* cur = l->head;
     while (cur != NULL) {
@@ -86,8 +86,28 @@ void printSV(LLV* l) {
     printf("]\n");
 };
 
-int isEmptySG(SG* l) {
+int isEmptySV(SG* l) {
     return l->head == NULL;
+}
+
+SG* copySG(SG* sg) {
+    SG* clone = newSG();
+    NodeSV* cur = sg->head;
+    while (cur != NULL) {
+        addSV(clone, cur->v);
+        cur = cur->next;
+    }
+    return clone;
+}
+
+SG* SGFromLLV(LLV* l) {
+    SG* clone = newSG();
+    NodeV* cur = l->head;
+    while (cur != NULL) {
+        addSV(clone, cur);
+        cur = cur->next;
+    }
+    return clone;
 }
 
 #endif

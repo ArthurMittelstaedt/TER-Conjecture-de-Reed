@@ -68,16 +68,16 @@ Color Lawler(GraphALL* g) {
             //printGraphALL(Sub_g);
             //calculate MIS of Sub_g
             // linked list of all sub-g's maximal independent sets
-            LLMIS* I = maximal_independant_sets(Sub_g);
+            LLSG* I = maximal_independant_sets(Sub_g);
             // the current independant set 
-            NodeMIS* curmis = I->head;
+            NodeSG* curmis = I->head;
 
             while (curmis != NULL) {
-                LLV* incurmis = curmis->mis;
+                SG* incurmis = curmis->sg;
 
                 binarySubG binaryMis = 0;
-                for (NodeV* cur = incurmis->head; cur != NULL; cur = cur->next) {
-                    binaryMis = binaryMis | (1 << (size_t)idPosMap[cur->id]);
+                for (NodeSV* cur = incurmis->head; cur != NULL; cur = cur->next) {
+                    binaryMis = binaryMis | (1 << (size_t)idPosMap[cur->v->id]);
                 }
 
                 //printf("X[S] avant le min = %d , \n", X[S]);
@@ -107,7 +107,7 @@ Color Lawler(GraphALL* g) {
                 curmis = curmis->next; // next mis
             }
 
-            destroyLLMIS(I);
+            destroyLLSG(I);
             //printf("X[S]= %d \n", X[S]);
             destroyGraphALL(Sub_g);
         }

@@ -16,7 +16,7 @@ typedef struct SG {
     int length;
 } SG;
 
-extern NodeSV* newNodeSV(NodeV v);
+extern NodeSV* newNodeSV(NodeV* v);
 
 extern void destroyNodeSV(NodeSV* n);
 
@@ -30,9 +30,13 @@ extern void removeSV(SG* l, NodeSV* n);
 
 extern int containsSV(SG* l, VertexId id);
 
-extern NodeV* findSV(SG* l, VertexId id);
+extern NodeSV* findSV(SG* l, VertexId id);
 
-extern void printSV(SG* l);
+extern void printSG(SG* l);
 
 extern int isEmptySV(SG* l);
+
+extern SG* copySG(SG* sg);
+
+extern SG* SGFromLLV(LLV* l);
 #endif

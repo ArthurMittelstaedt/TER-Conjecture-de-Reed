@@ -5,10 +5,7 @@
 #include <stdio.h>
 #include "../Data_Structures/c/GraphALL.c"
 
-typedef enum BOOL BOOL;
-enum BOOL { FALSE, TRUE };
-
-// For permutation generation part --------------------------
+// For permutations generation part --------------------------
 typedef VertexId Labels;
 typedef int Perm_Element_index;
 

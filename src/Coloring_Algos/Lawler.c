@@ -5,9 +5,6 @@
 #include <stdio.h>
 #include "../Independants_sets/c/mis.c"
 
-typedef enum BOOL BOOL;
-enum BOOL { FALSE, TRUE };
-
 
 void affichage_binaire(binarySubG n)
 {

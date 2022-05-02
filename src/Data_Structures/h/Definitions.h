@@ -20,4 +20,7 @@ typedef unsigned int binarySubG;
 // this sets the limit on the number of vertices in our implementation.
 const size_t MAX_N = sizeof(binarySubG) * 8;
 
+typedef enum BOOL BOOL;
+enum BOOL { FALSE, TRUE };
+
 #endif

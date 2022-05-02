@@ -1,3 +1,6 @@
+#ifndef LLV_C
+#define LLV_C
+
 #include "../h/LLV.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -115,3 +118,4 @@ LLV* copyLLV(LLV* l) {
     return clone;
 }
 
+#endif

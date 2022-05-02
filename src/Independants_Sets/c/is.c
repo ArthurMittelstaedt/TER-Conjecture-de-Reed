@@ -1,3 +1,6 @@
+#ifndef IS_C
+#define IS_C
+
 #include "../c/mis.c" // c'est pas #include "mis.c" plutot ?
 
 void addToAll(LLMIS* is_with_u, NodeV* u);
@@ -68,3 +71,4 @@ void addList(LLMIS* is_with_u, LLMIS* is_without_u) {
     }
     is_with_u->length += is_without_u->length;
 }
+#endif

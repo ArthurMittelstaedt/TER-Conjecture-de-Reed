@@ -7,6 +7,8 @@
 // As we will work on small graphs ~20 vertices, we chose the smallest
 // type available.
 typedef unsigned char VertexId;
+// the available ids go from 0 to 2^(sizeof(VertexId)*8) 
+#define NB_VID 256
 
 // We don't need more colors than vertices.
 typedef VertexId Color;

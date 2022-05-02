@@ -1,8 +1,8 @@
+#ifndef LAWLER_C
+#define LAWLER_C
+
 #include <stdlib.h>
 #include <stdio.h>
-//#include "../Data_Structures/c/GraphALL.c" // Arthur : - je crois y'a des erreurs de compilation
-// si tu met ça, car tu inclues aussi mis.c (ligne du dessous) et ça inclue deux fois graphALL.C
-// j'essaye de résoudre ça en mettent des ifndef sur un commit prochain
 #include "../Independants_sets/c/mis.c"
 
 typedef enum BOOL BOOL;
@@ -127,3 +127,4 @@ Color Lawler(GraphALL* g) {
 
 
 }
+#endif

@@ -1,3 +1,6 @@
+#ifndef LLN_C
+#define LLN_C
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "../h/LLN.h"
@@ -162,7 +165,7 @@ NodeN* findN(LLN* AL, VertexId id) {
 
 void destroyNodeN(NodeN* n) {
     free(n);
-} 
+}
 
 void removeN(LLN* AL, NodeN* n) { // ici le n c'est le np de lemelent que j veut supp
     if (n != NULL) {
@@ -259,3 +262,4 @@ LLN* copyLLN(LLN* l) {
     }
     return clone;
 }
+#endif

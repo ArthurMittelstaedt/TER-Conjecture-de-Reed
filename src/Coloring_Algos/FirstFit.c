@@ -1,3 +1,6 @@
+#ifndef FIRST_FIT_C
+#define FIRST_FIT_C
+
 #include <stdlib.h>
 #include <stdio.h>
 #include "../Data_Structures/c/GraphALL.c"
@@ -214,3 +217,4 @@ Color FirstFitchromatic_number(GraphALL* g) {
     return chromatic_number;
 }
 
+#endif

@@ -1,3 +1,6 @@
+#ifndef MIS_C
+#define MIS_C
+
 #include "../c/LLmis.c"
 
 NodeV* findMaximalVertex(LLV* SUBG, LLV* CAND);
@@ -101,3 +104,4 @@ NodeV* findMaximalVertex(LLV* SUBG, LLV* CAND) {
     return maxU;
 
 }
+#endif

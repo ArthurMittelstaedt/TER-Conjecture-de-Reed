@@ -1,3 +1,7 @@
+
+#ifndef LLMIS_C
+#define LLMIS_C
+
 #include "../h/LLmis.h"
 
 // Allocate the memory for a node with given list representing an ipendant set
@@ -76,3 +80,4 @@ void printMIS(LLMIS* l) {
     }
     printf("]\n");
 };
+#endif

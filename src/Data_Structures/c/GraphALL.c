@@ -1,3 +1,6 @@
+#ifndef GRAPHALL_C
+#define GRAPHALL_C
+
 #include <stdlib.h>
 #include "../h/GraphALL.h"
 #include "LLN.c"
@@ -89,8 +92,8 @@ GraphALL* subGraphALL(GraphALL* g, binarySubG subgBits) {
     NodeV* curVC;
     int pos = 0;
     int first = 1;
-    NodeV* idNodeVMap[256] = {};
-    unsigned char idPresentMap[256] = {};
+    NodeV* idNodeVMap[NB_VID] = {};
+    unsigned char idPresentMap[NB_VID] = {};
     while (curVG != NULL) {
         if (subgBits & (1 << pos)) {
             if (first) {
@@ -207,3 +210,5 @@ GraphALL* copyGraphALL(GraphALL* g) {
         curVG = curVG->next;
     }
 }*/
+
+#endif

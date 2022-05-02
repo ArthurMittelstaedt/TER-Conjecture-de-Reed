@@ -90,7 +90,7 @@ GraphALL* subGraphALL(GraphALL* g, int subgBits) {
     int pos = 0;
     int first = 1;
     NodeV* idNodeVMap[256] = {};
-    VertexId idPosMap[256] = {};
+    unsigned char idPresentMap[256] = {};
     while (curVG != NULL) {
         if (subgBits & (1 << pos)) {
             if (first) {
@@ -108,7 +108,7 @@ GraphALL* subGraphALL(GraphALL* g, int subgBits) {
                 subg->vertices->length++;
                 idNodeVMap[curVC->id] = curVC;
             }
-            idPosMap[curVC->id] = pos + 1;
+            idPresentMap[curVC->id] = pos + 1;
         }
         curVG = curVG->next;
         pos++;
@@ -120,7 +120,7 @@ GraphALL* subGraphALL(GraphALL* g, int subgBits) {
         if (subgBits & (1 << pos)) {
             NodeN* curNG = curVG->neighbours->head;
             while (curNG != NULL) {
-                if (idPosMap[curNG->id] != 0) {
+                if (idPresentMap[curNG->id] != 0) {
                     AddNodeN(curVC->neighbours, curNG->id);
                     NodeV* neighbourNV = idNodeVMap[curNG->id];
                     curVC->neighbours->head->pv = neighbourNV;

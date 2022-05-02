@@ -83,7 +83,7 @@ void resetColALL(GraphALL* g) {
     }
 }
 
-GraphALL* subGraphALL(GraphALL* g, int subgBits) {
+GraphALL* subGraphALL(GraphALL* g, binarySubG subgBits) {
     GraphALL* subg = newGraphALL();
     NodeV* curVG = g->vertices->head;
     NodeV* curVC;

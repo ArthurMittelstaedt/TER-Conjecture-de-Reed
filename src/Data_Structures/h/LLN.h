@@ -1,12 +1,10 @@
 #ifndef LLN_H
 #define LLN_H
 
+#include "Definitions.h"
 #include "LLV.h"
 
-typedef unsigned char VertexId;
-
 typedef struct NodeN NodeN;
-typedef VertexId Color;
 
 struct NodeN {
     VertexId id; //node

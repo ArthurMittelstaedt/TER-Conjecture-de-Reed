@@ -19,6 +19,6 @@ extern int containsEdgeALL(GraphALL* g, VertexId v, VertexId u);
 extern void printGraphALL(GraphALL* g);
 extern void resetColALL(GraphALL* g);
 extern void removeVertexNodeALL(GraphALL* g, NodeV* nvV);
-//extern GraphALL* subGraphALL(GraphALL* g, int subgBits);
+extern GraphALL* subGraphALL(GraphALL* g, binarySubG subgBits);
 
 #endif

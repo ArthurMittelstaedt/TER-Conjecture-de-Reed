@@ -9,10 +9,9 @@ typedef enum BOOL BOOL;
 enum BOOL { FALSE, TRUE };
 
 
-void affichage_binaire(int n)
+void affichage_binaire(binarySubG n)
 {
-    int i;
-    for (i = 31; i >= 0; i--)
+    for (size_t i = MAX_N - 1; i >= 0; i--)
         printf("%d", (n >> i) & 1);
     printf("\n");
 }
@@ -20,27 +19,26 @@ void affichage_binaire(int n)
 Color Lawler(GraphALL* g) {
     VertexId idPosMap[256] = {};
     NodeV* curV = g->vertices->head;
-    int w = 0;
+    size_t w = 0;
     while (curV != NULL) {
         idPosMap[curV->id] = w;
         w++;
         curV = curV->next;
     }
 
-    int length = g->vertices->length;
+    size_t length = g->vertices->length;
     //number of grpahs in g without the empty one
-    int nb_sub_graph = 1 << length;
+    size_t nb_sub_graph = 1 << length;
 
     //the tab where we will coloriate all subgraphs
-    // TODO change int for VertexId
-    int* X = (int*)malloc(nb_sub_graph * sizeof(int)); //car j'ai choisi les S des int (32 bit)
+    Color* X = (Color*)malloc(nb_sub_graph * sizeof(Color));
     // initate X
     // if empty graph then 0
     X[0] = 0;
     // if only one vertex int the graph then 1
-    int start_from = 1;
-    for (int i = 1; i < nb_sub_graph; i = i << 1) {
-        for (int j = start_from; j < i; j++) {
+    size_t start_from = 1;
+    for (size_t i = 1; i < nb_sub_graph; i = i << 1) {
+        for (size_t j = start_from; j < i; j++) {
             X[j] = length * 4;
 
         }
@@ -49,7 +47,7 @@ Color Lawler(GraphALL* g) {
         //printf("i correspondant: %d \n" ,i);
         start_from = i + 1;
     }
-    for (int j = start_from; j < nb_sub_graph; j++) {
+    for (size_t j = start_from; j < nb_sub_graph; j++) {
         X[j] = length * 4;
         //printf("length is : %d \n", length);
         //printf("cas >1 X[S]=: %d \n" , X[j]);
@@ -63,8 +61,8 @@ Color Lawler(GraphALL* g) {
     }
     printf("\n");
     //*/
-    int nextPow = 4;
-    for (int S = 2; S < nb_sub_graph; S++) {
+    size_t nextPow = 4;
+    for (binarySubG S = 2; S < nb_sub_graph; S++) {
         if (S != nextPow) {
             GraphALL* Sub_g = subGraphALL(g, S);
 
@@ -80,15 +78,15 @@ Color Lawler(GraphALL* g) {
             while (curmis != NULL) {
                 LLV* incurmis = curmis->mis;
 
-                int intmis = 0;
+                binarySubG binaryMis = 0;
                 for (NodeV* cur = incurmis->head; cur != NULL; cur = cur->next) {
-                    intmis = intmis | (1 << (int)idPosMap[cur->id]);
+                    binaryMis = binaryMis | (1 << (size_t)idPosMap[cur->id]);
                 }
 
                 //printf("X[S] avant le min = %d , \n", X[S]);
                 //X[S] = (X[S] <= (X[S & (~intmis)] + 1)) ?  X[S] : X[S & (~intmis)] ;
-                if ((X[S & (~intmis)] + 1) < X[S]) {
-                    X[S] = (X[S & (~intmis)]) + 1;
+                if ((X[S & (~binaryMis)] + 1) < X[S]) {
+                    X[S] = (X[S & (~binaryMis)]) + 1;
                 }
                 /*
                 printf("S est   = ");

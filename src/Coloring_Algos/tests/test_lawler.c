@@ -1,4 +1,4 @@
-#include "Lawler.c"
+#include "../Lawler.c"
 #include <stdio.h>
 
 int main() {

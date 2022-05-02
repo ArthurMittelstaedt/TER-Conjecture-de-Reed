@@ -8,8 +8,8 @@ int main(void) {
     addV(lv, '4');
     LLN* ln = newLLN();
     //    AddNodeN(ln, '1');
-    AddNodeN(ln, '3');
-    AddNodeN(ln, '4');
+    addN(ln, '3');
+    addN(ln, '4');
     printV(LLVminusLLN(lv, ln, '*'));
 
 }

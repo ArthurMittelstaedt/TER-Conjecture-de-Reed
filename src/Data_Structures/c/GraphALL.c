@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include "../h/GraphALL.h"
+#include "../h/LLN.h"
 #include "LLN.c"
 #include "LLV.c"
 
@@ -25,9 +26,9 @@ void addEdgeALL(GraphALL* g, VertexId v, VertexId u) {
     if (nvV == NULL) return;
     NodeV* nvU = findV(g->vertices, u);
     if (nvU == NULL) return;
-    AddNodeN(nvU->neighbours, v);            //                    this line            
+    addN(nvU->neighbours, v);            //                    this line            
     NodeN* NNVinNVU = nvU->neighbours->head; // <- this line must flow ↑
-    AddNodeN(nvV->neighbours, u);            //                    this line  
+    addN(nvV->neighbours, u);            //                    this line  
     NodeN* NNUinNVV = nvV->neighbours->head; // <- this line must flow ↑
     NNVinNVU->pn = NNUinNVV;
     NNVinNVU->pv = nvV;
@@ -62,11 +63,11 @@ void removeEdgeALL(GraphALL* g, VertexId v, VertexId u) {
     removeN(nvU->neighbours, NNVinNVU);
 };
 
-int containsVertexALL(GraphALL* g, VertexId v) {
+BOOL containsVertexALL(GraphALL* g, VertexId v) {
     return containsV(g->vertices, v);
 };
 
-int containsEdgeALL(GraphALL* g, VertexId v, VertexId u) {
+BOOL containsEdgeALL(GraphALL* g, VertexId v, VertexId u) {
     NodeV* nvV = findV(g->vertices, v);
     if (nvV != NULL) {
         return containsN(nvV->neighbours, u);
@@ -124,7 +125,7 @@ GraphALL* subGraphALL(GraphALL* g, binarySubG subgBits) {
             NodeN* curNG = curVG->neighbours->head;
             while (curNG != NULL) {
                 if (idPresentMap[curNG->id] != 0) {
-                    AddNodeN(curVC->neighbours, curNG->id);
+                    addN(curVC->neighbours, curNG->id);
                     NodeV* neighbourNV = idNodeVMap[curNG->id];
                     curVC->neighbours->head->pv = neighbourNV;
                     NodeN* curInN = findN(neighbourNV->neighbours, curVC->id);
@@ -173,7 +174,7 @@ GraphALL* copyGraphALL(GraphALL* g) {
             while (curNG != NULL) {
                 // printf("adding edge %c to %c", curVG->id, curNG->id);
                 // adding directed edge
-                AddNodeN(curVC->neighbours, curNG->id);
+                addN(curVC->neighbours, curNG->id);
                 NodeV* nV = findV(clone->vertices, curNG->id);
                 curVC->neighbours->head->pv = nV;
                 NodeN* nN = findN(nV->neighbours, curVC->id);

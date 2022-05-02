@@ -7,7 +7,4 @@ int main() {
     GraphALL* g = Gortzsch();
     printGraphALL(g);
     printf("The chromatic number of the Grötzsch graph is %d", Lawler(g));
-
-    //printGraphALL(g);printf("\n");
-
 }

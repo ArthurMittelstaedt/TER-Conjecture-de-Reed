@@ -34,7 +34,7 @@ extern NodeSV* findSV(SG* l, VertexId id);
 
 extern void printSG(SG* l);
 
-extern int isEmptySV(SG* l);
+extern int isEmptySG(SG* l);
 
 extern SG* copySG(SG* sg);
 

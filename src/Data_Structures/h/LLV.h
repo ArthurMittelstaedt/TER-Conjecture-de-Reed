@@ -63,5 +63,5 @@ extern NodeV* findV(LLV* l, VertexId id);
 // A. E. : != NULL
 extern void printV(LLV* l);
 
-extern int isEmptyV(LLV* l);
+extern int isEmptyLLV(LLV* l);
 #endif

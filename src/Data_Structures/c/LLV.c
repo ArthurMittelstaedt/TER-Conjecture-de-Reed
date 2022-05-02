@@ -14,10 +14,9 @@ NodeV* newNodeV(VertexId id) {
     nnv->prev = NULL;
 };
 
-void destroyNodeV(NodeV* n, int destroy_neighbour) {
+void destroyNodeV(NodeV* n) {
     if (n != NULL) {
-        if (destroy_neighbour)
-            destroyLLN(n->neighbours);
+        destroyLLN(n->neighbours);
         free(n);
     }
 };
@@ -28,14 +27,14 @@ LLV* newLLV() {
     l->head = NULL;
 };
 
-void destroyLLV(LLV* l, int destroy_neighbour) {
+void destroyLLV(LLV* l) {
     if (l != NULL) {
         NodeV* cur = NULL;
         NodeV* next = l->head;
         while (next != NULL) {
             cur = next;
             next = cur->next;
-            destroyNodeV(cur, destroy_neighbour);
+            destroyNodeV(cur);
         }
     }
 };
@@ -52,7 +51,7 @@ void addV(LLV* l, VertexId id) {
 };
 
 
-void removeV(LLV* l, NodeV* n, int destroy_neighbour) {
+void removeV(LLV* l, NodeV* n) {
     if (n != NULL) {
         if (n->prev == NULL) {
             l->head = n->next;
@@ -63,7 +62,7 @@ void removeV(LLV* l, NodeV* n, int destroy_neighbour) {
         if (n->next != NULL) {
             n->next->prev = n->prev;
         }
-        destroyNodeV(n, destroy_neighbour);
+        destroyNodeV(n);
         l->length -= 1;
     }
 };

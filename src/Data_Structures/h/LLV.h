@@ -30,14 +30,14 @@ typedef struct LLV {
 extern NodeV* newNodeV(VertexId id);
 
 // Frees the memory of a node, including its neigbourhood list
-extern void destroyNodeV(NodeV* n, int destroy_neighbour);
+extern void destroyNodeV(NodeV* n);
 
 // Allocate the memory for an empty linked list of vertices
 extern LLV* newLLV();
 
 // Frees the moemory of a linked list of vertices
 // including all its nodes.
-extern void destroyLLV(LLV* l, int destroy_neighbour);
+extern void destroyLLV(LLV* l);
 
 // Adds a new node at the head, for a vertex with id = id 
 // and empty neighbourhood
@@ -47,7 +47,7 @@ extern void addV(LLV* l, VertexId id);
 // Removes the node n from the list
 // A. E. : n is indeed a node of the list
 //         && l != NULL
-extern void removeV(LLV* l, NodeV* n, int destroy_neighbour);
+extern void removeV(LLV* l, NodeV* n);
 
 // Returns 1 if l contains a node with vertex id = id
 // 0 otherwise.

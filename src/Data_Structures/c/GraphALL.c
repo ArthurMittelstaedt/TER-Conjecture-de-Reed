@@ -12,7 +12,7 @@ GraphALL* newGraphALL() {
 };
 
 void destroyGraphALL(GraphALL* g) {
-    destroyLLV(g->vertices, 1);
+    destroyLLV(g->vertices);
     free(g);
 };
 
@@ -47,7 +47,7 @@ void removeVertexNodeALL(GraphALL* g, NodeV* nvV) {
         removeN(cur_neighbour->pv->neighbours, cur_neighbour->pn);
         cur_neighbour = cur_neighbour->next;
     }
-    removeV(g->vertices, nvV, 1);
+    removeV(g->vertices, nvV);
 }
 
 void removeEdgeALL(GraphALL* g, VertexId v, VertexId u) {

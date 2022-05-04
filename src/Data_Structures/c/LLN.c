@@ -19,7 +19,7 @@ NodeN* newNodeN(VertexId id) {
     return newNode;
 }
 
-int isEmptyN(LLN* AL) {
+int isEmptyLLN(LLN* AL) {
     return AL->head == NULL; // if AL is NULL it will return 1 else 0
 }
 
@@ -53,7 +53,7 @@ int isEmptyN(LLN* AL) {
 
     }
 */
-void AddNodeN(LLN* AL, VertexId id) {
+void addN(LLN* AL, VertexId id) {
     NodeN* newHead = newNodeN(id);
     NodeN* oldHead = AL->head;
     newHead->next = oldHead;

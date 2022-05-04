@@ -25,13 +25,13 @@ LLSG* maximal_independant_sets(GraphALL* g) {
 }
 
 void expand(SG* SUBG, SG* CAND) {
-    if (isEmptySV(SUBG)) {
+    if (isEmptySG(SUBG)) {
         addSG(g_mis_list, copySG(Q));
     }
     else {
         NodeSV* u = findMaximalVertex(SUBG, CAND);
         SG* EXTu = SGinterLLN(CAND, u->v->neighbours, u->v->id);
-        while (!isEmptySV(EXTu)) {
+        while (!isEmptySG(EXTu)) {
             NodeSV* q = EXTu->head;
             addSV(Q, q->v);
             NodeSV* qinQ = Q->head;

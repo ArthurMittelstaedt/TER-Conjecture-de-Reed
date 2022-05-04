@@ -3,7 +3,6 @@
 
 #include <stdlib.h>
 #include "../h/GraphALL.h"
-#include "../h/LLN.h"
 #include "LLN.c"
 #include "LLV.c"
 

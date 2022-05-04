@@ -91,7 +91,7 @@ void printV(LLV* l) {
     printf("]\n");
 };
 
-int isEmptyV(LLV* l) {
+int isEmptyLLV(LLV* l) {
     return l->head == NULL;
 }
 

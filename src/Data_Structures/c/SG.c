@@ -86,7 +86,7 @@ void printSG(SG* l) {
     printf("]\n");
 };
 
-int isEmptySV(SG* l) {
+int isEmptySG(SG* l) {
     return l->head == NULL;
 }
 

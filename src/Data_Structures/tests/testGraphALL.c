@@ -1,5 +1,3 @@
-#include "../c/LLN.c"
-#include "../c/LLV.c"
 #include "../c/GraphALL.c"
 
 int main(void) {

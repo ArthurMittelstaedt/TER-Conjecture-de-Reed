@@ -16,7 +16,7 @@ LLSG* independant_sets(GraphALL* g) {
 }
 
 LLSG* independant_sets_r(SG* V) {
-    if (isEmptySV(V)) {
+    if (isEmptySG(V)) {
         LLSG* is = newLLSG();
         addSG(is, newSG());
         return is;

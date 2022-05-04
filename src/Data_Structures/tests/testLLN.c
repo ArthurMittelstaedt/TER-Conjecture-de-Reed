@@ -8,9 +8,9 @@ int main() {
     LLN* list = newLLN();
 
 
-    AddNodeN(list, 'a');
-    AddNodeN(list, 'b');
-    AddNodeN(list, 'c');
+    addN(list, 'a');
+    addN(list, 'b');
+    addN(list, 'c');
     NodeN* na = findN(list, 'a');
     removeN(list, na);
 

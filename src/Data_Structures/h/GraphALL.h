@@ -2,7 +2,6 @@
 #define GRAPHALL_H
 
 #include "LLV.h"
-#include "LLN.h"
 
 // GraphALL: (Graph adjacency linked list)
 // Graphs implemented with a linked list of adjacency linked lists.

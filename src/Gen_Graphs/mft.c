@@ -90,5 +90,5 @@ GraphALL* ALLmtf(GraphALL* H, Color k , int n , int d){
     LLSG* I = maximal_independant_sets(H);
     Connect_indep_sets(H,d,d,0,0,k,n);
 }
-//si je veux toutes le permutations de qui sont entre le graphe d'origine et le graphe construit je supprime des arête 
+//si je veux toutes le permutations de qui sont entre le graphe d'origine et le graphe construit je supprime des arêt 
 */

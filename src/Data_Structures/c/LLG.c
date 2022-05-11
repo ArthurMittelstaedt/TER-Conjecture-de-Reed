@@ -3,7 +3,7 @@
 #include "../h/LLG.h"
 #include <stdio.h>
 
-NodeG* newNodeG(GraphALL* g){
+NodeG* newNodeG(GraphALL* g) {
     NodeG* newNode = malloc(sizeof(NodeG));
     newNode->g = g;
     newNode->next = NULL;
@@ -11,18 +11,19 @@ NodeG* newNodeG(GraphALL* g){
     return newNode;
 };
 
-void destroyNodeG(NodeG* n){
+void destroyNodeG(NodeG* n) {
+    destroyGraphALL(n->g);
     free(n);
 };
 
-LLG* newLLG(){
+LLG* newLLG() {
     LLG* newList = malloc(sizeof(LLG));
     newList->head = NULL;
     newList->length = 0;
     return newList;
 };
 
-void destroyLLG(LLG* l){
+void destroyLLG(LLG* l) {
     if (l != NULL) {
         NodeG* cur = NULL;
         NodeG* next = l->head;
@@ -35,7 +36,7 @@ void destroyLLG(LLG* l){
 
 };
 
-void addG(LLG* l, GraphALL* g){
+void addG(LLG* l, GraphALL* g) {
     NodeG* newHead = newNodeG(g);
     NodeG* oldHead = l->head;
     l->head = newHead;
@@ -46,7 +47,7 @@ void addG(LLG* l, GraphALL* g){
     l->length += 1;
 };
 
-void printLLG(LLG* g){
+void printLLG(LLG* g) {
     printf("[\n");
     NodeG* cur = g->head;
     while (cur != NULL) {

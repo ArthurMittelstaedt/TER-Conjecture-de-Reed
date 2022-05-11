@@ -18,42 +18,70 @@ LLSG* is_n (int n , GraphALL* G){ // return indep sets with length n
 }
 
 LLG* Gen_tf(int n){
+    //initiat graphs :
     LLG* graphs  = newLLG();
-    printf("hi");
+    
+
+    // if n=0 return empty graph
     if (n == 0 ) {
         GraphALL* empty_graph = newGraphALL();
         addG(graphs, empty_graph);
-        return graphs;
     }
+    // sinon je crée le grpahe à n sommmet à partir de la liste des graphes à n-1 sommets
     else {
-        
+        // je crée la liste des graphes 
         LLG* smaller =newLLG();
+        // smaller = liste graphs des graphes de tailles n-1
         smaller = Gen_tf(n-1);
-        GraphALL* G = smaller->head->g;
+        // je parcours les graphes de la liste graphs smaller
+        NodeG* G = smaller->head;
+        // tant que smaller nest pas finis
         while(G != NULL){
-            LLSG* I = newLLSG();
-            I = is_n(n,G);
-            NodeSG* curInode = I->head; // je parcours les node de I
-            while (curInode != NULL){
-                // je parcours le is du current node de I
-                SG* is = curInode->sg;
-                NodeSV* iscur = is->head;
-                while (iscur != NULL){
-                   // for(int m =0; m<7; m++){
-                        // relier le sommet v ax sommet de ce stable de taille n
-                        // je crée le v 
-                    NodeV* v = newNodeV(v->id);
-                    NodeV* u = iscur->v;
-                    addEdgeALL(G,v->id, u->id);
-                   // }
-                    iscur = iscur->next;
+            // je copie G dans G1
+            GraphALL* G1 = G->g;
+            GraphALL* newG1 = newGraphALL();
+            newG1 = copyGraphALL(G1);  //newG1<- G1
+            // dans la je fais les calculs sur newG1
+            
+
+            for(int i=0 ; i<=n; i++){
+                LLSG* I = newLLSG();
+                I = is_n(i,G1); // je prend une liste I de is de taille i de G1 
+                NodeSG* curInode = I->head; // je parcours les node de cette liste I
+                //tant que jai pas finis la liste I :
+                while (curInode != NULL){
+                    // je parcours le is du current node de I
+                    // je prend le is 
+                    SG* is = curInode->sg;
+                    // je parcour les sommets de ce is
+                    NodeSV* iscur = is->head;
+                    //tant que le is nest pas finis je continu
+                    while (iscur != NULL){
+                        // je crée un sommet n
+                        NodeV* v = newNodeV(n+42);
+                        // je le rajoute dans les sommet de la copie de G1
+                        addV(newG1->vertices,v->id);
+                        // je nomme u le sommet du is curant 
+                        NodeV* u = iscur->v;
+                        //je rajoute une arête entre u et v dans la copie de G1
+                        addEdgeALL(newG1,v->id, u->id);
+                        //je passe au sommet suivant dans le is courant
+                        iscur = iscur->next;
+                    }
+                    // quand je fini de relierle sommetv aus sommets du is 
+                    // je rajoute ce nouveau graphe dans graphs 
+                    addG(graphs,newG1); 
+                    // et je passe au 2emme is de taille i du même graphe G1 pas de newG1
+                    // car je viens de le changer 
+                    curInode = curInode->next;
                 }
-                curInode = curInode->next;
+                destroyLLSG(I);
+            
             }
-            addG(graphs,G);//faut init grpahs
-            destroyLLSG(I);
+            G=G->next;
         }
-        return graphs;
+        
     }
+    return graphs;
 
 }

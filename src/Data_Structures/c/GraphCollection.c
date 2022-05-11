@@ -68,4 +68,12 @@ GraphALL* Cube() {
     return g;
 }
 
+GraphALL* Independant(size_t n) {
+    GraphALL* g = newGraphALL();
+    for (VertexId i = 65; i < 65 + n; i++) {
+        addVertexALL(g, i);
+    }
+    return g;
+}
+
 #endif

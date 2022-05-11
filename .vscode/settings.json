@@ -7,6 +7,7 @@
     "files.associations": {
         "*.lua.txt": "lua",
         "linkedlist.h": "c",
-        "vertexlist.h": "c"
+        "vertexlist.h": "c",
+        "stdio.h": "c"
     },
 }

@@ -10,7 +10,7 @@ LLSG* is_n (int n , GraphALL* G){ // return indep sets with length n
     while (curis!= NULL){
         if(curis->sg->length == n){
             addSG(isn,curis->sg);
-            curis = curis->next;
+            //curis = curis->next;
         }
         curis = curis->next;
     }
@@ -29,24 +29,20 @@ LLG* Gen_tf(int n){
     }
     // sinon je crée le grpahe à n sommmet à partir de la liste des graphes à n-1 sommets
     else {
-        // je crée la liste des graphes 
-        LLG* smaller =newLLG();
         // smaller = liste graphs des graphes de tailles n-1
-        smaller = Gen_tf(n-1);
+        LLG* smaller = Gen_tf(n-1);
         // je parcours les graphes de la liste graphs smaller
         NodeG* G = smaller->head;
         // tant que smaller nest pas finis
         while(G != NULL){
             // je copie G dans G1
             GraphALL* G1 = G->g;
-            GraphALL* newG1 = newGraphALL();
-            newG1 = copyGraphALL(G1);  //newG1<- G1
+            GraphALL* newG1 = copyGraphALL(G1);  //newG1<- G1
             // dans la je fais les calculs sur newG1
             
 
             for(int i=0 ; i<=n; i++){
-                LLSG* I = newLLSG();
-                I = is_n(i,G1); // je prend une liste I de is de taille i de G1 
+                LLSG* I = is_n(i,G1); // je prend une liste I de is de taille i de G1 
                 NodeSG* curInode = I->head; // je parcours les node de cette liste I
                 //tant que jai pas finis la liste I :
                 while (curInode != NULL){
@@ -58,13 +54,13 @@ LLG* Gen_tf(int n){
                     //tant que le is nest pas finis je continu
                     while (iscur != NULL){
                         // je crée un sommet n
-                        NodeV* v = newNodeV(n+42);
+                        VertexId v =n+42;
                         // je le rajoute dans les sommet de la copie de G1
-                        addV(newG1->vertices,v->id);
+                        addV(newG1->vertices,v);
                         // je nomme u le sommet du is curant 
                         NodeV* u = iscur->v;
                         //je rajoute une arête entre u et v dans la copie de G1
-                        addEdgeALL(newG1,v->id, u->id);
+                        addEdgeALL(newG1,v, u->id);
                         //je passe au sommet suivant dans le is courant
                         iscur = iscur->next;
                     }

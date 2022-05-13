@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 int main(void) {
-    
-    LLG* triangle_free_graphs = Gen_tfdeg6(7);
-    printLLG(triangle_free_graphs);
+
+    LLG* triangle_free_graphs = Gen_tfdeg6(8);
+    //printLLG(triangle_free_graphs);
 }

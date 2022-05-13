@@ -2,7 +2,7 @@
 #include "../Max_Clique/max_clique.c"
 #include "../Coloring_Algos/Lawler.c"
 
-const int N = 6;
+const int N = 7;
 
 int main(void) {
     for (int i = 0; i <= N; i++) {

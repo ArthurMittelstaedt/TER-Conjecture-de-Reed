@@ -15,7 +15,7 @@ int degmax(SG* sg, GraphALL* G) {
     return degmax;
 }
 
-LLG* Gen_tfdeg6(int n) {
+LLG* Gen_tfdeg6_connected(int n) {
     LLG* graphs = newLLG();
 
 
@@ -24,10 +24,15 @@ LLG* Gen_tfdeg6(int n) {
         GraphALL* empty_graph = newGraphALL();
         addG(graphs, empty_graph);
     }
+    if (n == 1) {
+        GraphALL* small_graph = newGraphALL();
+        addVertexALL(small_graph, n + 64);
+        addG(graphs, small_graph);
+    }
     // sinon je crée le graphe à n sommmet à partir de la liste des graphes à n-1 sommets
     else {
         // smaller = liste graphs des graphes de tailles n-1
-        LLG* smaller = Gen_tfdeg6(n - 1);
+        LLG* smaller = Gen_tfdeg6_connected(n - 1);
         // je parcours les graphes de la liste graphs smaller
         NodeG* G = smaller->head;
         // tant que smaller nest pas finis
@@ -36,13 +41,14 @@ LLG* Gen_tfdeg6(int n) {
             GraphALL* G1 = G->g;
             LLSG* I = independant_sets(G1); // je prends une liste I de is de taille i de G1 
             NodeSG* curInode = I->head; // je parcours les node de cette liste I
-
                 // dans la je fais les calculs sur newG1
 
 
                 //tant que jai pas finis la liste I :
             while (curInode != NULL) {
-                if (curInode->sg->length <= 6 && degmax(curInode->sg, G1) <= 5) {
+                if ((curInode->sg->length <= 6)
+                    && (degmax(curInode->sg, G1) <= 5)
+                    && (curInode->sg->length > 0)) {
                     GraphALL* newG1 = copyGraphALL(G1);  //newG1<- G1
                     // je crée un sommet n
                     VertexId v = n + 64;
@@ -65,13 +71,14 @@ LLG* Gen_tfdeg6(int n) {
                     // quand je fini de relierle sommetv aus sommets du is 
                     // je rajoute ce nouveau graphe dans graphs 
                     addG(graphs, newG1);
+                    // et je passe au 2emme is de taille i du même graphe G1 pas de newG1
+                    // car je viens de le changer
                 }
-                // et je passe au 2emme is de taille i du même graphe G1 pas de newG1
-                // car je viens de le changer 
                 curInode = curInode->next;
             }
             destroyLLSG(I);
             G = G->next;
+
         }
 
     }

@@ -1,4 +1,4 @@
-#include "../Graph_Gen/c/graph_gen.c"
+#include "../Graph_Gen/c/connected_gen.c"
 #include "../Max_Clique/max_clique.c"
 #include "../Coloring_Algos/Lawler.c"
 
@@ -6,7 +6,7 @@ const int N = 6;
 
 int main(void) {
     for (int i = 0; i <= N; i++) {
-        LLG* graphs = GenGraphs(i);
+        LLG* graphs = GenConnected(i);
         NodeG* ng = graphs->head;
         int nb_Clique_Skiped = 0;
         while (ng != NULL) {

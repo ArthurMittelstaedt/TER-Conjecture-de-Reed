@@ -192,6 +192,16 @@ GraphALL* copyGraphALL(GraphALL* g) {
     return clone;
 }
 
+size_t maxDeg(GraphALL* g) {
+    NodeV* curV = g->vertices->head;
+    size_t maxD = 0;
+    while (curV != NULL) {
+        size_t curD = curV->neighbours->length;
+        maxD = maxD >= curD ? maxD : curD;
+        curV = curV->next;
+    }
+    return maxD;
+}
 /*
 GraphALL* copyGraphALL(GraphALL* g) {
     GraphALL* clone = newGraphALL();

@@ -32,7 +32,7 @@ Color Lawler(GraphALL* g) {
     // initate X
     // if empty graph then 0
     X[0] = 0;
-    // if only one vertex int the graph then 1
+    // if only one vertex in the graph then 1
     size_t start_from = 1;
     for (size_t i = 1; i < nb_sub_graph; i = i << 1) {
         for (size_t j = start_from; j < i; j++) {

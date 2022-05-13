@@ -3,18 +3,7 @@
 #include <stdlib.h>
 #include "../Data_Structures/c/LLG.c"
 
-LLSG* is_n(int n, GraphALL* G) { // return indep sets with length n
-    LLSG* isn = newLLSG();
-    LLSG* I = independant_sets(G); // je parcours les indep sets de G
-    NodeSG* curis = I->head;
-    while (curis != NULL) {
-        if (curis->sg->length == n) {
-            addSG(isn, curis->sg);
-        }
-        curis = curis->next;
-    }
-    return isn;
-}
+
 
 LLG* Gen_tf(int n) {
     LLG* graphs = newLLG();
@@ -36,8 +25,6 @@ LLG* Gen_tf(int n) {
             // je copie G dans G1
             GraphALL* G1 = G->g;
             // dans la je fais les calculs sur newG1
-
-
 
             LLSG* I = independant_sets(G1); // je prends une liste I de is de taille i de G1 
             NodeSG* curInode = I->head; // je parcours les node de cette liste I

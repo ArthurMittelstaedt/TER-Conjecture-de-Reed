@@ -3,7 +3,6 @@
 #include <stdio.h>
 
 int main() {
-    printf("hi");
     GraphALL* g = Gortzsch();
     printGraphALL(g);
     printf("The chromatic number of the Grötzsch graph is %d", Lawler(g));

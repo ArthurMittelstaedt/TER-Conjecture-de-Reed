@@ -30,8 +30,9 @@ int main(void){
     }*/
 
 
-    // n=7
-    LLG* G = Gen_tfdeg6(7);
+    int n=12;
+    LLG* G = Gen_tfdeg6(n);
+    printf("n = %d \n" , n );
     NodeG* ng = G->head;
     while(ng != NULL){
         GraphALL* g = ng->g;

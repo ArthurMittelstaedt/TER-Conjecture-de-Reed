@@ -36,13 +36,15 @@ LLG* Gen_tfdeg6(int n) {
             GraphALL* G1 = G->g;
             LLSG* I = independant_sets(G1); // je prends une liste I de is de taille i de G1 
             NodeSG* curInode = I->head; // je parcours les node de cette liste I
-            if(curInode->sg->length <= 6 && degmax(curInode->sg,G1)<=5){
+            int nmis = curInode->sg->length;
+            while (curInode != NULL) {
 
                 // dans la je fais les calculs sur newG1
 
                 
                 //tant que jai pas finis la liste I :
-                 while (curInode != NULL) {
+                 
+                if(nmis <= 6 && degmax(curInode->sg,G1)<=5  ){
                     GraphALL* newG1 = copyGraphALL(G1);  //newG1<- G1
                     // je crée un sommet n
                     VertexId v = n + 64;
@@ -67,8 +69,9 @@ LLG* Gen_tfdeg6(int n) {
                     addG(graphs, newG1);
                     // et je passe au 2emme is de taille i du même graphe G1 pas de newG1
                     // car je viens de le changer 
-                    curInode = curInode->next;
+                    
                 }
+                curInode = curInode->next;
                 destroyLLSG(I);
             } // du if
             G = G->next;

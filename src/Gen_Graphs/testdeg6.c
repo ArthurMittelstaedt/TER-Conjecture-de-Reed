@@ -3,6 +3,6 @@
 
 int main(void) {
     
-    LLG* triangle_free_graphs = Gen_tfdeg6(7);
+    LLG* triangle_free_graphs = Gen_tfdeg6(8);
     printLLG(triangle_free_graphs);
 }

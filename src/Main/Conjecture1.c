@@ -29,7 +29,7 @@ int main(void) {
                 //printf("Ok\n");
             }
         }
-        printf("Verified for size = %d (skiped clique for %d/%d)\n",
+        printf("Verified for size = %d (skipped clique for %d/%d)\n",
             i, nb_Clique_Skiped, graphs->length);
         destroyLLG(graphs);
     }

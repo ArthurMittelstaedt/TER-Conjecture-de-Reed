@@ -1,4 +1,4 @@
-#include "../Gen_Graphs/Gen_tf_deg6.c"
+#include "../Tf_Graphs_Gen/Gen_tf_deg6_connected.c"
 #include "../Coloring_Algos/Lawler.c"
 #include <stdio.h>
 
@@ -60,7 +60,7 @@ int main(void) {
 
 
     // n=7
-    LLG* G = Gen_tfdeg6(5);
+    LLG* G = Gen_tfdeg6_connected(7);
     NodeG* ng = G->head;
     size_t nb_skiped = 0;
     while (ng != NULL) {
@@ -86,6 +86,6 @@ int main(void) {
         ng = ng->next;
 
     }
-    printf("skiped %d/%d", nb_skiped, G->length);
+    printf("skipped %d/%d", nb_skiped, G->length);
     destroyLLG(G);
 }

@@ -2,7 +2,7 @@
 #include "../Max_Clique/max_clique.c"
 #include "../Coloring_Algos/Lawler.c"
 
-const int N = 7;
+const int N = 6;
 
 int main(void) {
     for (int i = 0; i <= N; i++) {
@@ -29,7 +29,7 @@ int main(void) {
                 //printf("Ok\n");
             }
         }
-        printf("Verified for size = %d (skiped clique for %d/%d)\n",
+        printf("Verified for size = %d (skipped clique for %d/%d)\n",
             i, nb_Clique_Skiped, graphs->length);
         destroyLLG(graphs);
     }
